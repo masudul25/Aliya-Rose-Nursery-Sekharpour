@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alia Rose Nursery, Shikharpur - Rose Plants</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Georgia,serif;background:#fff7f8;color:#3b2a2e}
+  header{background:linear-gradient(135deg,#b3123f,#e8527a);color:#fff;text-align:center;padding:40px 16px}
+  header h1{margin:0 0 8px;font-size:2.2rem}
+  nav{background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,.1);padding:10px;text-align:center}
+  nav a{margin:0 10px;color:#b3123f;text-decoration:none;font-weight:bold}
+  section{max-width:1100px;margin:auto;padding:28px 16px}
+  h2{color:#b3123f;border-bottom:2px solid #f3c1cf;padding-bottom:6px}
+  .btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .btns button{border:1px solid #b3123f;background:#fff;color:#b3123f;padding:8px 14px;border-radius:20px;cursor:pointer;font-size:1rem}
+  .btns button.active,.btns button:hover{background:#b3123f;color:#fff}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:16px}
+  .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.12);overflow:hidden}
+  .card img{width:100%;height:180px;object-fit:cover;background:#f3c1cf}
+  .card .body{padding:12px}
+  .card h3{margin:0 0 4px;color:#b3123f}
+  .tag{display:inline-block;background:#fde3ea;color:#b3123f;border-radius:10px;padding:2px 8px;font-size:.8rem;margin-bottom:6px}
+  .order{display:inline-block;margin-top:8px;background:#25d366;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:bold}
+  .updates .u{background:#fff;border-left:5px solid #e8527a;padding:10px 14px;margin:10px 0;border-radius:6px}
+  .videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+  .videos iframe{width:100%;height:200px;border:0;border-radius:10px}
+  footer{background:#3b2a2e;color:#fff;text-align:center;padding:20px}
+  #count{margin-top:10px;font-style:italic}
+  .more{display:inline-block;margin-top:8px;margin-right:6px;background:#b3123f;color:#fff;padding:8px 12px;border:0;border-radius:8px;cursor:pointer;font-size:.95rem}
+  #modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:20;overflow:auto;padding:16px}
+  #modal .box{background:#fff;max-width:800px;margin:20px auto;border-radius:12px;padding:16px;position:relative}
+  #modal .close{position:absolute;top:8px;right:12px;font-size:1.8rem;cursor:pointer;color:#b3123f;border:0;background:none}
+  #modal .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:10px 0}
+  #modal .photos img{width:100%;height:160px;object-fit:cover;border-radius:8px}
+  #modal iframe{width:100%;height:340px;border:0;border-radius:10px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Alia Rose Nursery</h1>
+  <p>Shikharpur | Healthy rose plants, rose varieties and daily garden updates</p>
+</header>
+
+<nav>
+  <a href="#browse">Browse Roses</a>
+  <a href="#updates">Daily Updates</a>
+  <a href="#videos">Videos</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section id="browse">
+  <h2>Browse by Type</h2>
+  <div class="btns" id="typeBtns"></div>
+  <h2>Browse by Alphabet</h2>
+  <div class="btns" id="letterBtns"></div>
+  <div id="count"></div>
+  <div class="grid" id="roseGrid"></div>
+</section>
+
+<section id="updates" class="updates">
+  <h2>Daily Updates</h2>
+  <!-- Add a new update by copying one block below and putting it on top -->
+  <div class="u"><b>09 Nov 2026</b><br>New hybrid tea saplings are ready for sale.</div>
+  <div class="u"><b>08 Nov 2026</b><br>Our first buds of the season have opened in the garden.</div>
+</section>
+
+<section id="videos">
+  <h2>Videos</h2>
+  <div class="videos">
+    <!-- Replace VIDEO_ID with your YouTube video id -->
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact and Orders</h2>
+  <p>Click Order on any rose to message us on WhatsApp, or call us directly.</p>
+  <a class="order" href="https://wa.me/916290488309">Chat on WhatsApp</a>
+</section>
+
+<div id="modal" onclick="if(event.target===this)closeModal()"><div class="box"><button class="close" onclick="closeModal()">&times;</button><div id="modalBody"></div></div></div>
+
+<footer>&copy; 2026 Alia Rose Nursery, Shikharpur. All rights reserved.</footer>
+
+<script>
+// ====== EDIT YOUR ROSE LIST HERE ======
+// name = real variety name, type = category, img = main picture link (or leave empty), info = short description
+// photos = list of picture file names for that rose (optional), video = YouTube video id for that rose (optional)
+// Example: photos:["double-delight-1.jpg","double-delight-2.jpg"], video:"abc123XYZ"
+// Codes like A1, A2, B1 are made automatically from the first letter, in alphabetical order.
+const WHATSAPP = "916290488309";
+const roses = [
+  {name:"Abraham Darby", type:"Shrub Rose", info:"Fragrant apricot-pink cupped blooms.", img:""},
+  {name:"Alba Meidiland", type:"Ground Cover", info:"Pure white clusters, spreads low and wide.", img:""},
+  {name:"Angel Face", type:"Floribunda", info:"Ruffled lavender flowers with strong scent.", img:""},
+  {name:"Black Baccara", type:"Hybrid Tea", info:"Deep velvety dark red, almost black.", img:""},
+  {name:"Bonica", type:"Shrub Rose", info:"Soft pink, very hardy and free flowering.", img:""},
+  {name:"Cinderella", type:"Miniature", info:"Tiny pale pink blooms, ideal for pots.", img:""},
+  {name:"Double Delight", type:"Hybrid Tea", info:"Cream petals edged in red, rich fragrance.", img:"", photos:["double-delight-1.jpg","double-delight-2.jpg"], video:""},
+  {name:"Damask Rose", type:"Old Garden Rose", info:"Used for rose water and perfume.", img:""},
+  {name:"Edward Rose", type:"Desi Rose", info:"The common Indian desi gulab, very fragrant.", img:""},
+  {name:"Europeana", type:"Floribunda", info:"Deep red clusters on a compact plant.", img:""},
+  {name:"Gruss an Aachen", type:"Floribunda", info:"Creamy peach-pink, old fashioned charm.", img:""},
+  {name:"Iceberg", type:"Floribunda", info:"Famous white rose that blooms nonstop.", img:""},
+  {name:"Kiss of Fire", type:"Hybrid Tea", info:"Bright orange-red flowers.", img:""},
+  {name:"Mr. Lincoln", type:"Hybrid Tea", info:"Classic deep red with a strong scent.", img:""},
+  {name:"Peace", type:"Hybrid Tea", info:"Yellow edged with pink, a world favourite.", img:""},
+  {name:"Queen Elizabeth", type:"Grandiflora", info:"Tall plant with clear pink blooms.", img:""},
+  {name:"Rainbow Sunblaze", type:"Miniature", info:"Small multicolour blooms, great for pots.", img:""}
+  // Add your own named rose here later, for example:
+  // ,{name:"Your Rose Name", type:"Hybrid Tea", info:"Our own variety.", img:""}
+];
+// ======================================
+
+roses.sort((a,b)=>a.name.localeCompare(b.name));
+const counter={};
+roses.forEach(r=>{
+  const L=r.name[0].toUpperCase();
+  counter[L]=(counter[L]||0)+1;
+  r.code=L+counter[L];
+});
+
+const types=["All",...new Set(roses.map(r=>r.type))];
+const letters=[...new Set(roses.map(r=>r.name[0].toUpperCase()))];
+let curType="All", curLetter="All";
+
+function makeButtons(){
+  const tb=document.getElementById("typeBtns");
+  tb.innerHTML="";
+  types.forEach(t=>{
+    const b=document.createElement("button");
+    b.textContent=t;
+    if(t===curType) b.className="active";
+    b.onclick=()=>{curType=t;curLetter="All";makeButtons();show();};
+    tb.appendChild(b);
+  });
+  const lb=document.getElementById("letterBtns");
+  lb.innerHTML="";
+  ["All",...letters].forEach(l=>{
+    const b=document.createElement("button");
+    b.textContent=l;
+    if(l===curLetter) b.className="active";
+    b.onclick=()=>{curLetter=l;curType="All";makeButtons();show();};
+    lb.appendChild(b);
+  });
+}
+
+function show(){
+  const list=roses.filter(r=>
+    (curType==="All"||r.type===curType)&&
+    (curLetter==="All"||r.name[0].toUpperCase()===curLetter));
+  document.getElementById("count").textContent=list.length+" variety(ies) found";
+  document.getElementById("roseGrid").innerHTML=list.map(r=>`
+    <div class="card">
+      ${r.img?`<img src="${r.img}" alt="${r.name}">`:`<img alt="">`}
+      <div class="body">
+        <span class="tag">${r.type}</span>
+        <h3>${r.code} (${r.name})</h3>
+        <p>${r.info}</p>
+        <button class="more" onclick="openModal('${r.code}')">Photos and Video</button>
+        <a class="order" target="_blank"
+           href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hello, I want to buy the rose "+r.code+" ("+r.name+")")}">Order on WhatsApp</a>
+      </div>
+    </div>`).join("");
+}
+
+function openModal(code){
+  const r=roses.find(x=>x.code===code);
+  let html=`<h2>${r.code} (${r.name})</h2><p>${r.info}</p>`;
+  const hasPhotos=r.photos&&r.photos.length;
+  const hasVideo=r.video&&r.video.length;
+  if(hasPhotos){
+    html+=`<div class="photos">`+r.photos.map(p=>`<img src="${p}" alt="${r.name}">`).join("")+`</div>`;
+  }
+  if(hasVideo){
+    html+=`<iframe src="https://www.youtube.com/embed/${r.video}" allowfullscreen></iframe>`;
+  }
+  if(!hasPhotos&&!hasVideo){
+    html+=`<p><i>Photos and video coming soon.</i></p>`;
+  }
+  document.getElementById("modalBody").innerHTML=html;
+  document.getElementById("modal").style.display="block";
+}
+function closeModal(){document.getElementById("modal").style.display="none";}
+
+makeButtons();
+show();
+</script>
+</body>
+</html>
