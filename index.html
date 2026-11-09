@@ -5,36 +5,365 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Alia Rose Nursery, Shikharpur - Rose Plants</title>
 <style>
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Georgia,serif;background:#fff7f8;color:#3b2a2e}
-  header{background:linear-gradient(135deg,#b3123f,#e8527a);color:#fff;text-align:center;padding:40px 16px}
-  header h1{margin:0 0 8px;font-size:2.2rem}
-  nav{background:#fff;position:sticky;top:0;z-index:5;box-shadow:0 2px 6px rgba(0,0,0,.1);padding:10px;text-align:center}
-  nav a{margin:0 10px;color:#b3123f;text-decoration:none;font-weight:bold}
-  section{max-width:1100px;margin:auto;padding:28px 16px}
-  h2{color:#b3123f;border-bottom:2px solid #f3c1cf;padding-bottom:6px}
-  .btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
-  .btns button{border:1px solid #b3123f;background:#fff;color:#b3123f;padding:8px 14px;border-radius:20px;cursor:pointer;font-size:1rem}
-  .btns button.active,.btns button:hover{background:#b3123f;color:#fff}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px;margin-top:16px}
-  .card{background:#fff;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.12);overflow:hidden}
-  .card img{width:100%;height:180px;object-fit:cover;background:#f3c1cf}
-  .card .body{padding:12px}
-  .card h3{margin:0 0 4px;color:#b3123f}
-  .tag{display:inline-block;background:#fde3ea;color:#b3123f;border-radius:10px;padding:2px 8px;font-size:.8rem;margin-bottom:6px}
-  .order{display:inline-block;margin-top:8px;background:#25d366;color:#fff;padding:8px 12px;border-radius:8px;text-decoration:none;font-weight:bold}
-  .updates .u{background:#fff;border-left:5px solid #e8527a;padding:10px 14px;margin:10px 0;border-radius:6px}
-  .videos{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
-  .videos iframe{width:100%;height:200px;border:0;border-radius:10px}
-  footer{background:#3b2a2e;color:#fff;text-align:center;padding:20px}
-  #count{margin-top:10px;font-style:italic}
-  .more{display:inline-block;margin-top:8px;margin-right:6px;background:#b3123f;color:#fff;padding:8px 12px;border:0;border-radius:8px;cursor:pointer;font-size:.95rem}
-  #modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:20;overflow:auto;padding:16px}
-  #modal .box{background:#fff;max-width:800px;margin:20px auto;border-radius:12px;padding:16px;position:relative}
-  #modal .close{position:absolute;top:8px;right:12px;font-size:1.8rem;cursor:pointer;color:#b3123f;border:0;background:none}
-  #modal .photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:10px 0}
-  #modal .photos img{width:100%;height:160px;object-fit:cover;border-radius:8px}
-  #modal iframe{width:100%;height:340px;border:0;border-radius:10px;margin-top:10px}
+/* ===== ALIA ROSE NURSERY - PROFESSIONAL THEME ===== */
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: linear-gradient(180deg, #e5f5ff, #f4fbff, #eff9f0);
+  color: #304b43;
+  line-height: 1.6;
+}
+
+/* HEADER */
+
+header {
+  background: linear-gradient(135deg, #55b9e8, #8bd5e9, #a8dfc0);
+  color: white;
+  text-align: center;
+  padding: 65px 16px;
+}
+
+header h1 {
+  margin: 0 0 10px;
+  font-family: Georgia, serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  text-shadow: 0 2px 5px rgba(0,0,0,.2);
+}
+
+header p {
+  font-size: 1.05rem;
+  margin: 0;
+}
+
+/* NAVIGATION */
+
+nav {
+  background: rgba(255,255,255,.97);
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  padding: 15px 10px;
+  text-align: center;
+  box-shadow: 0 3px 12px rgba(0,0,0,.09);
+}
+
+nav a {
+  display: inline-block;
+  margin: 5px 12px;
+  color: #247c53;
+  text-decoration: none;
+  font-weight: bold;
+  transition: .3s;
+}
+
+nav a:hover {
+  color: #e75480;
+}
+
+/* SECTIONS */
+
+section {
+  max-width: 1150px;
+  margin: auto;
+  padding: 40px 18px;
+}
+
+h2 {
+  color: #247c53;
+  font-family: Georgia, serif;
+  font-size: 1.7rem;
+  border-bottom: 2px solid #b8e4ca;
+  padding-bottom: 10px;
+}
+
+/* FILTER BUTTONS */
+
+.btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  margin: 16px 0;
+}
+
+.btns button {
+  border: 1px solid #56b4df;
+  background: white;
+  color: #247c53;
+  padding: 10px 17px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: .95rem;
+  transition: .25s;
+}
+
+.btns button.active,
+.btns button:hover {
+  background: #247c53;
+  color: white;
+  border-color: #247c53;
+}
+
+/* ROSE GRID */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(250px, 1fr)
+  );
+  gap: 22px;
+  margin-top: 22px;
+}
+
+/* ROSE CARDS */
+
+.card {
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0,0,0,.08);
+  transition: transform .3s, box-shadow .3s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0,0,0,.14);
+}
+
+.card img {
+  width: 100%;
+  height: 205px;
+  object-fit: cover;
+  background: #dff1e5;
+}
+
+.card .body {
+  padding: 16px;
+}
+
+.card h3 {
+  color: #247c53;
+  margin: 5px 0;
+  font-size: 1.15rem;
+}
+
+.card p {
+  color: #64756d;
+  font-size: .95rem;
+}
+
+/* CATEGORY TAG */
+
+.tag {
+  display: inline-block;
+  background: #ffe4ed;
+  color: #d44775;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: .8rem;
+  margin-bottom: 7px;
+  font-weight: bold;
+}
+
+/* BUTTONS */
+
+.order {
+  display: inline-block;
+  margin-top: 10px;
+  background: #25b96a;
+  color: white;
+  padding: 10px 14px;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: .3s;
+}
+
+.order:hover {
+  background: #168c4c;
+  transform: translateY(-2px);
+}
+
+.more {
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 5px;
+  background: #56b4df;
+  color: white;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 9px;
+  cursor: pointer;
+  font-size: .95rem;
+  transition: .3s;
+}
+
+.more:hover {
+  background: #2585ae;
+}
+
+/* DAILY UPDATES */
+
+.updates .u {
+  background: white;
+  border-left: 5px solid #56b4df;
+  padding: 16px;
+  margin: 14px 0;
+  border-radius: 10px;
+  box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+/* VIDEOS */
+
+.videos {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(280px, 1fr)
+  );
+  gap: 20px;
+}
+
+.videos iframe {
+  width: 100%;
+  height: 210px;
+  border: 0;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+
+/* CONTACT */
+
+#contact {
+  text-align: center;
+}
+
+#contact p {
+  color: #526b60;
+}
+
+/* FOOTER */
+
+footer {
+  background: linear-gradient(135deg, #247c53, #164b36);
+  color: white;
+  text-align: center;
+  padding: 28px 15px;
+  margin-top: 30px;
+}
+
+/* COUNT */
+
+#count {
+  margin-top: 15px;
+  color: #247c53;
+  font-weight: bold;
+}
+
+/* PHOTO MODAL */
+
+#modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(15,40,35,.78);
+  z-index: 20;
+  overflow: auto;
+  padding: 16px;
+}
+
+#modal .box {
+  background: white;
+  max-width: 800px;
+  margin: 30px auto;
+  border-radius: 16px;
+  padding: 22px;
+  position: relative;
+}
+
+#modal .close {
+  position: absolute;
+  top: 8px;
+  right: 14px;
+  font-size: 2rem;
+  cursor: pointer;
+  color: #e75480;
+  border: 0;
+  background: none;
+}
+
+#modal .photos {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(180px, 1fr)
+  );
+  gap: 12px;
+  margin: 15px 0;
+}
+
+#modal .photos img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+#modal iframe {
+  width: 100%;
+  height: 340px;
+  border: 0;
+  border-radius: 12px;
+  margin-top: 12px;
+}
+
+/* MOBILE RESPONSIVE */
+
+@media (max-width: 600px) {
+
+  header {
+    padding: 45px 14px;
+  }
+
+  nav a {
+    margin: 5px 7px;
+    font-size: .9rem;
+  }
+
+  section {
+    padding: 28px 13px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .videos {
+    grid-template-columns: 1fr;
+  }
+
+  .card img {
+    height: 220px;
+  }
+
+}
+
+/* ACCESSIBILITY */
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid #e75480;
+  outline-offset: 3px;
+}
 </style>
 </head>
 <body>
