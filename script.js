@@ -1,17 +1,17 @@
 // Sample dataset for 200+ rose varieties
 const roseVarieties = [
-  { name: "Double Delight", type: "Hybrid Tea", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Black Lady", type: "Hybrid Tea", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Lal Kolkata", type: "Desi Rose", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Iceberg", type: "Floribunda", fragrant: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Angel Face", type: "Floribunda", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Miniature Red", type: "Miniature", fragrant: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Eden Climber", type: "Climber", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Knock Out", type: "Shrub", fragrant: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Flower Carpet Pink", type: "Ground Cover", fragrant: false, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Queen Elizabeth", type: "Grandiflora", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Abraham Darby", type: "Fragrant Roses", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-  { name: "Blue Moon", type: "Hybrid Tea", fragrant: true, videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+  { name: "Double Delight", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Black Lady", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Lal Kolkata", type: "Desi Rose", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Iceberg", type: "Floribunda", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Angel Face", type: "Floribunda", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Miniature Red", type: "Miniature", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Eden Climber", type: "Climber", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Knock Out", type: "Shrub", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Flower Carpet Pink", type: "Ground Cover", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Queen Elizabeth", type: "Grandiflora", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Abraham Darby", type: "Fragrant Roses", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
+  { name: "Blue Moon", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" }
 ];
 
 let filteredData = [...roseVarieties];
@@ -33,7 +33,6 @@ function toggleAccordion(id) {
 
 // Filter catalog by type or alphabet
 function filterCatalog(filterCategory, value, element) {
-  // Update active state on buttons
   const parent = element.parentElement;
   parent.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
   element.classList.add('active');
@@ -57,7 +56,7 @@ function filterCatalog(filterCategory, value, element) {
   renderCatalog();
 }
 
-// Render Rose Catalog Cards
+// Render Rose Catalog Cards with WhatsApp Order & Channel Links
 function renderCatalog() {
   const grid = document.getElementById("catalogGrid");
   grid.innerHTML = "";
@@ -78,21 +77,29 @@ function renderCatalog() {
       ? `<span class="badge fragrant">✨ Fragrant</span>`
       : `<span class="badge">${rose.type}</span>`;
 
+    // WhatsApp Direct Order Link with pre-filled message
+    const whatsappMessage = encodeURIComponent(`Hello, I want to order the rose variety: ${rose.name} (${rose.type}). Please share details.`);
+    const whatsappUrl = `https://wa.me/916290488309?text=${whatsappMessage}`;
+
     card.innerHTML = `
       <div class="img-placeholder">Photos Coming Soon</div>
       <div class="card-body">
         ${isFragrantBadge}
         <h3>${rose.name}</h3>
-        <button class="btn btn-secondary" onclick="openVideoModal('${rose.videoUrl}', '${rose.name}')">
-          🎬 Watch Video
-        </button>
+        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
+          <a href="${whatsappUrl}" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.5rem;">
+            🛒 Order on WhatsApp
+          </a>
+          <a href="${rose.channelUrl}" target="_blank" class="btn btn-secondary" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.5rem;">
+            📺 Watch Channel
+          </a>
+        </div>
       </div>
     `;
 
     grid.appendChild(card);
   });
 
-  // Toggle View More button
   const viewMoreBtn = document.getElementById("viewMoreBtn");
   if (visibleCount >= filteredData.length) {
     viewMoreBtn.style.display = "none";
@@ -107,18 +114,6 @@ function loadMore() {
   renderCatalog();
 }
 
-// Video Modal controls
-function openVideoModal(videoUrl, title) {
-  document.getElementById("modalTitle").innerText = title;
-  document.getElementById("videoIframe").src = videoUrl;
-  document.getElementById("videoModal").classList.add("show");
-}
-
-function closeVideoModal() {
-  document.getElementById("videoModal").classList.remove("show");
-  document.getElementById("videoIframe").src = "";
-}
-
 // Map Fallback Trigger
 function showMapFallback() {
   document.getElementById("mapFallback").classList.add("show");
@@ -131,7 +126,6 @@ function initScrollObserver() {
       if (entry.isIntersecting) {
         entry.target.classList.remove('scroll-hidden');
       } else {
-        // Hide only when scrolling down past the top boundary
         if (entry.boundingClientRect.top < 0) {
           entry.target.classList.add('scroll-hidden');
         }
