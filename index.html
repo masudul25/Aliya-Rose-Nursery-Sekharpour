@@ -1,556 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alia Rose Nursery, Shikharpur - Rose Plants</title>
-<style>
-  /* Alia Rose Nursery — professional garden-inspired stylesheet
-   Save this file as: style.css
-   Keep it in the same GitHub folder as index.html.
-*/
-
-:root {
-  --green: #245b43;
-  --green-dark: #173f30;
-  --green-soft: #eaf3ec;
-  --rose: #c94f70;
-  --rose-dark: #a93658;
-  --sky: #eaf6fb;
-  --ink: #26352d;
-  --muted: #68766e;
-  --paper: #ffffff;
-  --page: #f5f9f5;
-  --line: #e2ebe3;
-  --shadow: 0 12px 32px rgba(28, 64, 43, .10);
-  --radius: 18px;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  color: var(--ink);
-  background:
-    radial-gradient(circle at 10% 0%, rgba(215, 239, 247, .75), transparent 32rem),
-    linear-gradient(180deg, #f4fbfd 0%, var(--page) 42%, #f8faf6 100%);
-  font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
-  line-height: 1.65;
-}
-
-img, video {
-  display: block;
-  max-width: 100%;
-}
-
-img {
-  height: auto;
-}
-
-a {
-  color: var(--green);
-  text-decoration: none;
-}
-
-a:hover {
-  color: var(--rose-dark);
-}
-
-button, input, select, textarea {
-  font: inherit;
-}
-
-button, .button, .btn {
-  cursor: pointer;
-  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
-}
-
-button:hover, .button:hover, .btn:hover {
-  transform: translateY(-2px);
-}
-
-header, .site-header, nav {
-  position: relative;
-  z-index: 5;
-}
-
-header, .site-header {
-  color: white;
-  background: linear-gradient(120deg, var(--green-dark), #367653);
-  box-shadow: 0 5px 22px rgba(20, 55, 36, .15);
-}
-
-header {
-  padding: 26px 5%;
-  text-align: center;
-}
-
-header h1, .site-header h1 {
-  margin: 0 0 6px;
-  color: white;
-  font-size: clamp(1.8rem, 4vw, 3rem);
-  line-height: 1.15;
-  letter-spacing: -.04em;
-}
-
-header p, .site-header p {
-  margin: 5px 0 0;
-  color: rgba(255,255,255,.88);
-}
-
-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  padding: 12px 16px;
-  background: rgba(255,255,255,.96);
-  border-bottom: 1px solid var(--line);
-}
-
-nav a {
-  padding: 8px 14px;
-  border-radius: 999px;
-  color: var(--green-dark);
-  font-weight: 650;
-}
-
-nav a:hover, nav a.active {
-  color: white;
-  background: var(--green);
-}
-
-main, .container, .content {
-  width: min(1160px, 92%);
-  margin: 32px auto;
-}
-
-section {
-  margin: 30px 0;
-}
-
-h2, h3 {
-  color: var(--green-dark);
-  line-height: 1.25;
-}
-
-h2 {
-  margin: 0 0 18px;
-  font-size: clamp(1.45rem, 3vw, 2rem);
-}
-
-h3 {
-  margin: 0 0 10px;
-}
-
-p {
-  margin-top: 0;
-}
-
-.hero {
-  padding: clamp(28px, 6vw, 64px) 24px;
-  border: 1px solid rgba(255,255,255,.8);
-  border-radius: 26px;
-  background:
-    linear-gradient(110deg, rgba(20, 64, 43, .84), rgba(35, 93, 64, .62)),
-    url("https://images.unsplash.com/photo-1494972308805-463bc619d34e?auto=format&fit=crop&w=1800&q=85") center/cover;
-  color: white;
-  text-align: center;
-  box-shadow: var(--shadow);
-}
-
-.hero h1, .hero h2, .hero h3 {
-  color: white;
-}
-
-.hero p {
-  max-width: 700px;
-  margin: 10px auto 22px;
-  color: rgba(255,255,255,.94);
-}
-
-.card, .rose-card, .product-card, .update-card, .video-card {
-  overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  background: var(--paper);
-  box-shadow: 0 5px 20px rgba(31, 65, 43, .06);
-  transition: transform .22s ease, box-shadow .22s ease;
-}
-
-.card:hover, .rose-card:hover, .product-card:hover,
-.update-card:hover, .video-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow);
-}
-
-.grid, .rose-grid, .products, .updates, .videos {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 225px), 1fr));
-  gap: 20px;
-}
-
-.card img, .rose-card img, .product-card img,
-.update-card img, .video-card img {
-  width: 100%;
-  aspect-ratio: 4 / 3;
-  object-fit: cover;
-  background: var(--green-soft);
-}
-
-.card-content, .rose-info, .product-info, .update-content {
-  padding: 16px;
-}
-
-.card h3, .rose-card h3, .product-card h3 {
-  margin-bottom: 6px;
-}
-
-.price, .rose-price {
-  color: var(--rose-dark);
-  font-weight: 750;
-}
-
-.filters, .filter-buttons, .alphabet-filter, .category-filter {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 9px;
-  margin: 18px 0 24px;
-}
-
-.filters button, .filter-buttons button,
-.alphabet-filter button, .category-filter button {
-  padding: 8px 14px;
-  border: 1px solid #d7e5d9;
-  border-radius: 999px;
-  color: var(--green-dark);
-  background: white;
-  font-weight: 650;
-}
-
-.filters button:hover, .filters button.active,
-.filter-buttons button.active, .alphabet-filter button.active,
-.category-filter button.active {
-  border-color: var(--green);
-  color: white;
-  background: var(--green);
-}
-
-button, .button, .btn, a.button, a.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 11px 18px;
-  border: 0;
-  border-radius: 999px;
-  color: white;
-  background: var(--green);
-  font-weight: 700;
-  text-align: center;
-}
-
-button.secondary, .button.secondary, .btn.secondary {
-  color: var(--green-dark);
-  background: var(--green-soft);
-}
-
-button.whatsapp, .whatsapp, a[href*="wa.me"] {
-  color: white;
-  background: #218c55;
-}
-
-input, select, textarea {
-  width: 100%;
-  padding: 12px 14px;
-  border: 1px solid #d7e2d9;
-  border-radius: 12px;
-  color: var(--ink);
-  background: white;
-  outline: none;
-}
-
-input:focus, select:focus, textarea:focus {
-  border-color: #6b9c7b;
-  box-shadow: 0 0 0 3px rgba(74, 139, 91, .13);
-}
-
-.modal, .lightbox, .popup {
-  position: fixed;
-  inset: 0;
-  z-index: 20;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 18px;
-  background: rgba(13, 30, 21, .78);
-}
-
-.modal.show, .lightbox.show, .popup.show,
-.modal.active, .lightbox.active, .popup.active {
-  display: flex;
-}
-
-.modal-content, .lightbox-content, .popup-content {
-  position: relative;
-  width: min(900px, 100%);
-  max-height: 90vh;
-  overflow: auto;
-  padding: 20px;
-  border-radius: 20px;
-  background: white;
-}
-
-.modal-content img, .lightbox-content img,
-.modal-content video, .lightbox-content video {
-  max-height: 70vh;
-  margin: 0 auto;
-  object-fit: contain;
-}
-
-.close, .modal-close {
-  position: absolute;
-  top: 10px;
-  right: 12px;
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  padding: 0;
-  border-radius: 50%;
-  color: white;
-  background: var(--rose-dark);
-  font-size: 1.35rem;
-}
-
-footer, .site-footer {
-  margin-top: 48px;
-  padding: 28px 5%;
-  color: rgba(255,255,255,.9);
-  background: var(--green-dark);
-  text-align: center;
-}
-
-footer h2, footer h3, .site-footer h2, .site-footer h3 {
-  color: white;
-}
-
-footer a, .site-footer a {
-  color: #d8f0df;
-}
-
-hr {
-  height: 1px;
-  border: 0;
-  background: var(--line);
-}
-
-@media (max-width: 650px) {
-  header, .site-header {
-    padding: 22px 4%;
-  }
-
-  nav {
-    gap: 5px;
-    padding: 10px 8px;
-  }
-
-  nav a {
-    padding: 7px 10px;
-    font-size: .92rem;
-  }
-
-  main, .container, .content {
-    width: min(94%, 560px);
-    margin: 22px auto;
-  }
-
-  .grid, .rose-grid, .products, .updates, .videos {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
-  }
-
-  .card-content, .rose-info, .product-info, .update-content {
-    padding: 12px;
-  }
-
-  button, .button, .btn {
-    padding: 10px 14px;
-  }
-}
-
-@media (max-width: 390px) {
-  .grid, .rose-grid, .products, .updates, .videos {
-    grid-template-columns: 1fr;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
-  }
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aliya rose nursery - Shikharpur, Kolkata</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <h1>Alia Rose Nursery</h1>
-  <p>Shikharpur | Healthy rose plants, rose varieties and daily garden updates</p>
-</header>
+  <!-- Header -->
+  <header>
+    <h1>Aliya rose nursery</h1>
+    <p>Shikharpur, Kolkata, West Bengal</p>
+  </header>
 
-<nav>
-  <a href="#browse">Browse Roses</a>
-  <a href="#updates">Daily Updates</a>
-  <a href="#videos">Videos</a>
-  <a href="#contact">Contact</a>
-</nav>
+  <!-- Sticky Navigation -->
+  <nav class="sticky-nav">
+    <span class="nav-brand">Aliya rose nursery</span>
+    <button class="menu-btn" onclick="toggleMenu()">Menu ☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#catalog" onclick="toggleMenu()">Catalog</a>
+      <a href="#pots" onclick="toggleMenu()">Net Pots</a>
+      <a href="#fertilizers" onclick="toggleMenu()">Fertilizers</a>
+      <a href="#services-tools" onclick="toggleMenu()">Services & Tools</a>
+      <a href="#care" onclick="toggleMenu()">Rose Care</a>
+      <a href="#map-section" onclick="toggleMenu()">Location</a>
+    </div>
+  </nav>
 
-<section id="browse">
-  <h2>Browse by Type</h2>
-  <div class="btns" id="typeBtns"></div>
-  <h2>Browse by Alphabet</h2>
-  <div class="btns" id="letterBtns"></div>
-  <div id="count"></div>
-  <div class="grid" id="roseGrid"></div>
-</section>
+  <main>
+    <!-- Catalog Section -->
+    <section id="catalog" class="scroll-section">
+      <h2>Rose Variety Catalog</h2>
 
-<section id="updates" class="updates">
-  <h2>Daily Updates</h2>
-  <!-- Add a new update by copying one block below and putting it on top -->
-  <div class="u"><b>09 Nov 2026</b><br>New hybrid tea saplings are ready for sale.</div>
-  <div class="u"><b>08 Nov 2026</b><br>Our first buds of the season have opened in the garden.</div>
-</section>
-
-<section id="videos">
-  <h2>Videos</h2>
-  <div class="videos">
-    <!-- Replace VIDEO_ID with your YouTube video id -->
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-    <iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>Contact and Orders</h2>
-  <p>Click Order on any rose to message us on WhatsApp, or call us directly.</p>
-  <a class="order" href="https://wa.me/916290488309">Chat on WhatsApp</a>
-</section>
-
-<div id="modal" onclick="if(event.target===this)closeModal()"><div class="box"><button class="close" onclick="closeModal()">&times;</button><div id="modalBody"></div></div></div>
-
-<footer>&copy; 2026 Alia Rose Nursery, Shikharpur. All rights reserved.</footer>
-
-<script>
-// ====== EDIT YOUR ROSE LIST HERE ======
-// name = real variety name, type = category, img = main picture link (or leave empty), info = short description
-// photos = list of picture file names for that rose (optional), video = YouTube video id for that rose (optional)
-// Example: photos:["double-delight-1.jpg","double-delight-2.jpg"], video:"abc123XYZ"
-// Codes like A1, A2, B1 are made automatically from the first letter, in alphabetical order.
-const WHATSAPP = "916290488309";
-const roses = [
-  {name:"Abraham Darby", type:"Shrub Rose", info:"Fragrant apricot-pink cupped blooms.", img:""},
-  {name:"Alba Meidiland", type:"Ground Cover", info:"Pure white clusters, spreads low and wide.", img:""},
-  {name:"Angel Face", type:"Floribunda", info:"Ruffled lavender flowers with strong scent.", img:""},
-  {name:"Black Baccara", type:"Hybrid Tea", info:"Deep velvety dark red, almost black.", img:""},
-  {name:"Bonica", type:"Shrub Rose", info:"Soft pink, very hardy and free flowering.", img:""},
-  {name:"Cinderella", type:"Miniature", info:"Tiny pale pink blooms, ideal for pots.", img:""},
-  {name:"Double Delight", type:"Hybrid Tea", info:"Cream petals edged in red, rich fragrance.", img:"", photos:["double-delight-1.jpg","double-delight-2.jpg"], video:""},
-  {name:"Damask Rose", type:"Old Garden Rose", info:"Used for rose water and perfume.", img:""},
-  {name:"Edward Rose", type:"Desi Rose", info:"The common Indian desi gulab, very fragrant.", img:""},
-  {name:"Europeana", type:"Floribunda", info:"Deep red clusters on a compact plant.", img:""},
-  {name:"Gruss an Aachen", type:"Floribunda", info:"Creamy peach-pink, old fashioned charm.", img:""},
-  {name:"Iceberg", type:"Floribunda", info:"Famous white rose that blooms nonstop.", img:""},
-  {name:"Kiss of Fire", type:"Hybrid Tea", info:"Bright orange-red flowers.", img:""},
-  {name:"Mr. Lincoln", type:"Hybrid Tea", info:"Classic deep red with a strong scent.", img:""},
-  {name:"Peace", type:"Hybrid Tea", info:"Yellow edged with pink, a world favourite.", img:""},
-  {name:"Queen Elizabeth", type:"Grandiflora", info:"Tall plant with clear pink blooms.", img:""},
-  {name:"Rainbow Sunblaze", type:"Miniature", info:"Small multicolour blooms, great for pots.", img:""}
-  // Add your own named rose here later, for example:
-  // ,{name:"Your Rose Name", type:"Hybrid Tea", info:"Our own variety.", img:""}
-];
-// ======================================
-
-roses.sort((a,b)=>a.name.localeCompare(b.name));
-const counter={};
-roses.forEach(r=>{
-  const L=r.name[0].toUpperCase();
-  counter[L]=(counter[L]||0)+1;
-  r.code=L+counter[L];
-});
-
-const types=["All",...new Set(roses.map(r=>r.type))];
-const letters=[...new Set(roses.map(r=>r.name[0].toUpperCase()))];
-let curType="All", curLetter="All";
-
-function makeButtons(){
-  const tb=document.getElementById("typeBtns");
-  tb.innerHTML="";
-  types.forEach(t=>{
-    const b=document.createElement("button");
-    b.textContent=t;
-    if(t===curType) b.className="active";
-    b.onclick=()=>{curType=t;curLetter="All";makeButtons();show();};
-    tb.appendChild(b);
-  });
-  const lb=document.getElementById("letterBtns");
-  lb.innerHTML="";
-  ["All",...letters].forEach(l=>{
-    const b=document.createElement("button");
-    b.textContent=l;
-    if(l===curLetter) b.className="active";
-    b.onclick=()=>{curLetter=l;curType="All";makeButtons();show();};
-    lb.appendChild(b);
-  });
-}
-
-function show(){
-  const list=roses.filter(r=>
-    (curType==="All"||r.type===curType)&&
-    (curLetter==="All"||r.name[0].toUpperCase()===curLetter));
-  document.getElementById("count").textContent=list.length+" variety(ies) found";
-  document.getElementById("roseGrid").innerHTML=list.map(r=>`
-    <div class="card">
-      ${r.img?`<img src="${r.img}" alt="${r.name}">`:`<img alt="">`}
-      <div class="body">
-        <span class="tag">${r.type}</span>
-        <h3>${r.code} (${r.name})</h3>
-        <p>${r.info}</p>
-        <button class="more" onclick="openModal('${r.code}')">Photos and Video</button>
-        <a class="order" target="_blank"
-           href="https://wa.me/${WHATSAPP}?text=${encodeURIComponent("Hello, I want to buy the rose "+r.code+" ("+r.name+")")}">Order on WhatsApp</a>
+      <!-- Toggle 1: Browse by Type -->
+      <div class="toggle-container">
+        <button class="toggle-btn" onclick="toggleAccordion('typeNav')">
+          Browse by Type <span>▼</span>
+        </button>
+        <div class="toggle-content" id="typeNav">
+          <button class="filter-chip active" onclick="filterCatalog('type', 'All', this)">All</button>
+          <button class="filter-chip fragrant-chip" onclick="filterCatalog('type', 'Fragrant Roses', this)">✨ Fragrant Roses</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Hybrid Tea', this)">Hybrid Tea</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Floribunda', this)">Floribunda</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Miniature', this)">Miniature</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Climber', this)">Climber</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Shrub', this)">Shrub</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Ground Cover', this)">Ground Cover</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Desi Rose', this)">Desi Rose</button>
+          <button class="filter-chip" onclick="filterCatalog('type', 'Grandiflora', this)">Grandiflora</button>
+        </div>
       </div>
-    </div>`).join("");
-}
 
-function openModal(code){
-  const r=roses.find(x=>x.code===code);
-  let html=`<h2>${r.code} (${r.name})</h2><p>${r.info}</p>`;
-  const hasPhotos=r.photos&&r.photos.length;
-  const hasVideo=r.video&&r.video.length;
-  if(hasPhotos){
-    html+=`<div class="photos">`+r.photos.map(p=>`<img src="${p}" alt="${r.name}">`).join("")+`</div>`;
-  }
-  if(hasVideo){
-    html+=`<iframe src="https://www.youtube.com/embed/${r.video}" allowfullscreen></iframe>`;
-  }
-  if(!hasPhotos&&!hasVideo){
-    html+=`<p><i>Photos and video coming soon.</i></p>`;
-  }
-  document.getElementById("modalBody").innerHTML=html;
-  document.getElementById("modal").style.display="block";
-}
-function closeModal(){document.getElementById("modal").style.display="none";}
+      <!-- Toggle 2: Browse by Alphabet -->
+      <div class="toggle-container">
+        <button class="toggle-btn" onclick="toggleAccordion('alphaNav')">
+          Browse by Alphabet <span>▼</span>
+        </button>
+        <div class="toggle-content" id="alphaNav">
+          <button class="filter-chip active" onclick="filterCatalog('alpha', 'All', this)">All</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'A', this)">A</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'B', this)">B</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'C', this)">C</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'D', this)">D</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'L', this)">L</button>
+          <button class="filter-chip" onclick="filterCatalog('alpha', 'M', this)">M</button>
+        </div>
+      </div>
 
-makeButtons();
-show();
-</script>
+      <!-- Plant Cards Grid -->
+      <div class="grid" id="catalogGrid"></div>
+
+      <div class="center-btn">
+        <button class="btn btn-primary" id="viewMoreBtn" onclick="loadMore()">View More</button>
+      </div>
+    </section>
+
+    <!-- Net Pots Section -->
+    <section id="pots" class="scroll-section">
+      <h2>Net Pots & Accessories</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="card-body">
+            <h3>Standard Horticultural Net Pots</h3>
+            <p>Durable net pots designed for optimal root aeration, drainage, and healthy rose propagation.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Fertilizers Section -->
+    <section id="fertilizers" class="scroll-section">
+      <h2>Organic Fertilizers</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="card-body">
+            <h3>Composted Cow Dung Fertilizer</h3>
+            <p>Rich, fully aged organic matter ideal for improving soil structure and root growth.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="card-body">
+            <h3>Pure Earthworm Vermicompost</h3>
+            <p>Premium nutrient-rich organic vermicompost packed with essential microbes for lush blooms.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Services and Tools -->
+    <section id="services-tools" class="scroll-section">
+      <div class="services-tools-grid">
+        <div class="toggle-container">
+          <button class="toggle-btn" onclick="toggleAccordion('servicesList')">
+            Garden & Landscaping Services <span>▼</span>
+          </button>
+          <div class="toggle-content show-default" id="servicesList">
+            <ul class="info-list">
+              <li>Commercial Rose Garden Design & Planning</li>
+              <li>Bulk Nursery Stock Supply for Landscaping</li>
+              <li>On-site Soil Testing & Garden Maintenance</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <button class="toggle-btn" onclick="toggleAccordion('toolsList')">
+            Garden Tools & Supplies <span>▼</span>
+          </button>
+          <div class="toggle-content show-default" id="toolsList">
+            <ul class="info-list">
+              <li>Heavy-duty Rose Pruning Shears & Secateurs</li>
+              <li>High-pressure Power Spray Wands</li>
+              <li>Potting Mixes & Grafting Accessories</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Professional Rose Care & Growing Guide -->
+    <section id="care" class="scroll-section">
+      <h2>Professional Rose Care & Cultivation</h2>
+      <div class="card care-card">
+        <h3>Expert Growing Guide</h3>
+        <p>Growing commercial-quality rose blooms requires proper sunlight, moisture management, and precise pruning:</p>
+        <ul class="info-list">
+          <li><strong>Sunlight:</strong> Ensure plants receive 6–8 hours of direct sunlight daily.</li>
+          <li><strong>Watering:</strong> Water deeply at the base early in the morning, avoiding wet foliage.</li>
+          <li><strong>Pruning:</strong> Prune deadwood regularly at a 45-degree angle just above an outward-facing eye bud.</li>
+          <li><strong>Nutrients:</strong> Feed regularly with organic vermicompost and well-composted cow manure.</li>
+        </ul>
+        <div class="care-video-buttons">
+          <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Professional Rose Planting Guide')">
+            🎬 Watch Planting Guide
+          </button>
+          <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Rose Pruning Masterclass')">
+            🎬 Watch Pruning Masterclass
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Map & Location Section -->
+    <section id="map-section" class="scroll-section">
+      <h2>Nursery Location</h2>
+      <p><strong>Aliya rose nursery</strong> — Jhaligachhi, Greentech City, New Town, Shikharpur, Kolkata, West Bengal 700135</p>
+      
+      <div class="map-wrapper">
+        <iframe 
+          id="gmap_canvas"
+          src="https://maps.google.com/maps?q=Shikharpur%20Jhaligachhi%20Greentech%20City%20Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          onerror="showMapFallback()"
+          loading="lazy">
+        </iframe>
+        
+        <!-- Fallback view if map frame fails -->
+        <div class="map-fallback" id="mapFallback">
+          📍 <h3>Shikharpur Area, Kolkata</h3>
+          <p>Aliya rose nursery, Jhaligachhi, Greentech City, New Town, West Bengal 700135</p>
+          <a href="https://maps.app.goo.gl/sfhVkocWiRw44fsC8" target="_blank" rel="noopener" class="btn btn-primary">
+            Open in Google Maps
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Video Modal -->
+  <div class="modal" id="videoModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeVideoModal()">&times;</button>
+      <h3 id="modalTitle">Plant Video</h3>
+      <div class="video-container">
+        <iframe id="videoIframe" src="" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; Aliya rose nursery — Shikharpur, Kolkata, West Bengal</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
-</html>
+          </html>
+          
