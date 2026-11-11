@@ -3,152 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aliya rose nursery - Shikharpur, Kolkata</title>
+  <title>Aliya Rose Nursery — Shikarpur, Kolkata | 500 Rose Varieties</title>
+  <meta name="description" content="Aliya Rose Nursery, Shikarpur (Kolkata) — High-quality Indian & imported rose cultivars. Browse 100+ listed varieties from our 500-variety commercial catalog.">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- Header -->
   <header>
-    <h1>Aliya rose nursery</h1>
-    <p>Shikharpur, Kolkata, West Bengal</p>
+    <h1>Aliya Rose Nursery</h1>
+    <p>Shikarpur, Kolkata, West Bengal</p>
+    <div class="header-badge">500 Verified Varieties • Wholesale & Retail</div>
   </header>
 
-  <!-- Sticky Navigation -->
   <nav class="sticky-nav">
-    <span class="nav-brand">Aliya rose nursery</span>
+    <a href="index.html" class="nav-brand">Aliya Rose Nursery</a>
     <button class="menu-btn" onclick="toggleMenu()">Menu ☰</button>
     <div class="nav-links" id="navLinks">
       <a href="#catalog" onclick="toggleMenu()">Catalog</a>
       <a href="#pots" onclick="toggleMenu()">Net Pots</a>
       <a href="#fertilizers" onclick="toggleMenu()">Fertilizers</a>
-      <a href="#services-tools" onclick="toggleMenu()">Services & Tools</a>
+      <a href="#services" onclick="toggleMenu()">Services</a>
       <a href="#care" onclick="toggleMenu()">Rose Care</a>
+      <a href="order.html" onclick="toggleMenu()">Place Order</a>
       <a href="#map-section" onclick="toggleMenu()">Location</a>
     </div>
   </nav>
 
   <main>
-    <!-- Catalog Section -->
-    <section id="catalog" class="scroll-section">
-      <h2>Rose Variety Catalog</h2>
+    <!-- Catalog -->
+    <section id="catalog">
+      <h2>Rose Variety Catalog <span class="count" id="totalCount">0</span></h2>
+      <p class="text-muted text-sm" style="margin-bottom: 1rem;">
+        Browse our commercial directory. Each variety has a unique plant code (e.g. <strong>D1 BI HT F</strong>).
+        Click any rose for full details &amp; ordering.
+      </p>
 
-      <!-- Toggle 1: Browse by Type -->
-      <div class="toggle-container">
-        <button class="toggle-btn" onclick="toggleAccordion('typeNav')">
-          Browse by Type <span>▼</span>
-        </button>
-        <div class="toggle-content" id="typeNav">
-          <button class="filter-chip active" onclick="filterCatalog('type', 'All', this)">All</button>
-          <button class="filter-chip fragrant-chip" onclick="filterCatalog('type', 'Fragrant Roses', this)">✨ Fragrant Roses</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Hybrid Tea', this)">Hybrid Tea</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Floribunda', this)">Floribunda</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Miniature', this)">Miniature</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Climber', this)">Climber</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Shrub', this)">Shrub</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Ground Cover', this)">Ground Cover</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Desi Rose', this)">Desi Rose</button>
-          <button class="filter-chip" onclick="filterCatalog('type', 'Grandiflora', this)">Grandiflora</button>
+      <div class="controls">
+        <div class="search-row">
+          <input type="search" id="searchInput" placeholder="Search by name, code, color, origin…" autocomplete="off">
+          <button class="btn btn-primary" onclick="applyFilters()">Search</button>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Type</span>
+          <div class="filter-chips" id="typeFilters">
+            <button class="filter-chip active" data-filter="type" data-value="All">All</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Fragrance</span>
+          <div class="filter-chips">
+            <button class="filter-chip active" data-filter="fragrant" data-value="All">All</button>
+            <button class="filter-chip fragrant" data-filter="fragrant" data-value="true">✨ Fragrant Only</button>
+            <button class="filter-chip" data-filter="fragrant" data-value="false">Non-fragrant</button>
+          </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-label">Alphabet</span>
+          <div class="filter-chips" id="alphaFilters">
+            <button class="filter-chip active" data-filter="alpha" data-value="All">All</button>
+          </div>
         </div>
       </div>
 
-      <!-- Toggle 2: Browse by Alphabet -->
-      <div class="toggle-container">
-        <button class="toggle-btn" onclick="toggleAccordion('alphaNav')">
-          Browse by Alphabet <span>▼</span>
-        </button>
-        <div class="toggle-content" id="alphaNav">
-          <button class="filter-chip active" onclick="filterCatalog('alpha', 'All', this)">All</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'A', this)">A</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'B', this)">B</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'C', this)">C</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'D', this)">D</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'L', this)">L</button>
-          <button class="filter-chip" onclick="filterCatalog('alpha', 'M', this)">M</button>
-        </div>
-      </div>
-
-      <!-- Plant Cards Grid -->
       <div class="grid" id="catalogGrid"></div>
 
       <div class="center-btn">
-        <button class="btn btn-primary" id="viewMoreBtn" onclick="loadMore()">View More</button>
+        <button class="btn btn-primary" id="viewMoreBtn" onclick="loadMore()">View More Varieties</button>
       </div>
     </section>
 
-    <!-- Net Pots Section -->
-    <section id="pots" class="scroll-section">
+    <!-- Net Pots -->
+    <section id="pots">
       <h2>Net Pots & Accessories</h2>
       <div class="grid">
         <div class="card">
-          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="img-placeholder">🪴 Net Pots</div>
           <div class="card-body">
             <h3>Standard Horticultural Net Pots</h3>
-            <p>Durable net pots designed for optimal root aeration, drainage, and healthy rose propagation.</p>
+            <p class="text-sm text-muted">Durable net pots designed for optimal root aeration, drainage, and healthy rose propagation.</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="img-placeholder">🪴 Propagation</div>
+          <div class="card-body">
+            <h3>Grafting & Rootstock Supplies</h3>
+            <p class="text-sm text-muted">Quality rootstock and grafting accessories for commercial rose production.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Fertilizers Section -->
-    <section id="fertilizers" class="scroll-section">
+    <!-- Fertilizers -->
+    <section id="fertilizers">
       <h2>Organic Fertilizers</h2>
       <div class="grid">
         <div class="card">
-          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="img-placeholder">🌱 Cow Dung</div>
           <div class="card-body">
             <h3>Composted Cow Dung Fertilizer</h3>
-            <p>Rich, fully aged organic matter ideal for improving soil structure and root growth.</p>
+            <p class="text-sm text-muted">Rich, fully aged organic matter ideal for improving soil structure and root growth.</p>
           </div>
         </div>
         <div class="card">
-          <div class="img-placeholder">Photos Coming Soon</div>
+          <div class="img-placeholder">🪱 Vermicompost</div>
           <div class="card-body">
             <h3>Pure Earthworm Vermicompost</h3>
-            <p>Premium nutrient-rich organic vermicompost packed with essential microbes for lush blooms.</p>
+            <p class="text-sm text-muted">Premium nutrient-rich organic vermicompost packed with essential microbes for lush blooms.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Side-by-Side Services and Tools -->
-    <section id="services-tools" class="scroll-section">
+    <!-- Services -->
+    <section id="services">
+      <h2>Services & Garden Tools</h2>
       <div class="services-tools-grid">
-        <div class="toggle-container">
-          <button class="toggle-btn" onclick="toggleAccordion('servicesList')">
-            Garden & Landscaping Services <span>▼</span>
-          </button>
-          <div class="toggle-content show-default" id="servicesList">
-            <ul class="info-list">
-              <li>Commercial Rose Garden Design & Planning</li>
-              <li>Bulk Nursery Stock Supply for Landscaping</li>
-              <li>On-site Soil Testing & Garden Maintenance</li>
-            </ul>
-          </div>
+        <div class="info-box">
+          <h3>Garden & Landscaping Services</h3>
+          <ul class="info-list">
+            <li>Commercial Rose Garden Design & Planning</li>
+            <li>Bulk Nursery Stock Supply for Landscaping</li>
+            <li>On-site Soil Testing & Garden Maintenance</li>
+            <li>Wholesale rootstock & variety supply across India</li>
+          </ul>
         </div>
-
-        <div class="toggle-container">
-          <button class="toggle-btn" onclick="toggleAccordion('toolsList')">
-            Garden Tools & Supplies <span>▼</span>
-          </button>
-          <div class="toggle-content show-default" id="toolsList">
-            <ul class="info-list">
-              <li>Heavy-duty Rose Pruning Shears & Secateurs</li>
-              <li>High-pressure Power Spray Wands</li>
-              <li>Potting Mixes & Grafting Accessories</li>
-            </ul>
-          </div>
+        <div class="info-box">
+          <h3>Garden Tools & Supplies</h3>
+          <ul class="info-list">
+            <li>Heavy-duty Rose Pruning Shears & Secateurs</li>
+            <li>High-pressure Power Spray Wands</li>
+            <li>Potting Mixes & Grafting Accessories</li>
+            <li>Organic fungicides & foliar feeds</li>
+          </ul>
         </div>
       </div>
     </section>
 
-    <!-- Professional Rose Care & Growing Guide -->
-    <section id="care" class="scroll-section">
+    <!-- Care -->
+    <section id="care">
       <h2>Professional Rose Care & Cultivation</h2>
-      <div class="card care-card">
+      <div class="care-card">
         <h3>Expert Growing Guide</h3>
         <p>Growing commercial-quality rose blooms requires proper sunlight, moisture management, and precise pruning:</p>
-        <ul class="info-list">
+        <ul class="info-list" style="margin-top: 0.8rem;">
           <li><strong>Sunlight:</strong> Ensure plants receive 6–8 hours of direct sunlight daily.</li>
           <li><strong>Watering:</strong> Water deeply at the base early in the morning, avoiding wet foliage.</li>
           <li><strong>Pruning:</strong> Prune deadwood regularly at a 45-degree angle just above an outward-facing eye bud.</li>
@@ -156,33 +156,31 @@
         </ul>
         <div class="care-video-buttons">
           <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Professional Rose Planting Guide')">
-            🎬 Watch Planting Guide
+            🎬 Planting Guide
           </button>
           <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Rose Pruning Masterclass')">
-            🎬 Watch Pruning Masterclass
+            🎬 Pruning Masterclass
           </button>
         </div>
       </div>
     </section>
 
-    <!-- Map & Location Section -->
-    <section id="map-section" class="scroll-section">
+    <!-- Location -->
+    <section id="map-section">
       <h2>Nursery Location</h2>
-      <p><strong>Aliya rose nursery</strong> — Jhaligachhi, Greentech City, New Town, Shikharpur, Kolkata, West Bengal 700135</p>
-      
+      <p style="margin-bottom: 1rem;">
+        <strong>Aliya Rose Nursery</strong> — Jhaligachhi, Greentech City, New Town, Shikarpur, Kolkata, West Bengal 700135
+      </p>
       <div class="map-wrapper">
-        <iframe 
-          id="gmap_canvas"
-          src="https://maps.google.com/maps?q=Shikharpur%20Jhaligachhi%20Greentech%20City%20Kolkata&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          onerror="showMapFallback()"
-          loading="lazy">
+        <iframe
+          src="https://maps.google.com/maps?q=Shikarpur%20Jhaligachhi%20Greentech%20City%20Kolkata&t=&z=14&ie=UTF8&iwloc=&output=embed"
+          loading="lazy"
+          allowfullscreen>
         </iframe>
-        
-        <!-- Fallback view if map frame fails -->
         <div class="map-fallback" id="mapFallback">
-          📍 <h3>Shikharpur Area, Kolkata</h3>
-          <p>Aliya rose nursery, Jhaligachhi, Greentech City, New Town, West Bengal 700135</p>
-          <a href="https://maps.app.goo.gl/sfhVkocWiRw44fsC8" target="_blank" rel="noopener" class="btn btn-primary">
+          📍 <h3>Shikarpur Area, Kolkata</h3>
+          <p>Aliya Rose Nursery, Jhaligachhi, Greentech City, New Town, West Bengal 700135</p>
+          <a href="https://maps.app.goo.gl/sfhVkocWiRw44fsC8" target="_blank" rel="noopener" class="btn btn-primary mt-2">
             Open in Google Maps
           </a>
         </div>
@@ -196,16 +194,18 @@
       <button class="close-btn" onclick="closeVideoModal()">&times;</button>
       <h3 id="modalTitle">Plant Video</h3>
       <div class="video-container">
-        <iframe id="videoIframe" src="" allowfullscreen></iframe>
+        <iframe id="videoIframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
       </div>
     </div>
   </div>
 
   <footer>
-    <p>&copy; Aliya rose nursery — Shikharpur, Kolkata, West Bengal</p>
+    <p><strong>Aliya Rose Nursery</strong> — Shikarpur, Kolkata, West Bengal</p>
+    <p>Catalog Capacity: 500 Verified Varieties • Quote the unique plant code when ordering</p>
+    <p class="mt-1"><a href="order.html">Place a Wholesale / Retail Order</a></p>
   </footer>
 
+  <script src="roses-data.js"></script>
   <script src="script.js"></script>
 </body>
-          </html>
-          
+</html>
