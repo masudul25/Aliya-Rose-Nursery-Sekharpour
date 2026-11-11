@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Variety Details — Aliya Rose Nursery</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <h1>Aliya Rose Nursery</h1>
+    <p>Shikarpur, Kolkata, West Bengal</p>
+  </header>
+
+  <nav class="sticky-nav">
+    <a href="index.html" class="nav-brand">← Back to Catalog</a>
+    <button class="menu-btn" onclick="toggleMenu()">Menu ☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html#catalog">Catalog</a>
+      <a href="order.html">Place Order</a>
+      <a href="index.html#map-section">Location</a>
+    </div>
+  </nav>
+
+  <main>
+    <div id="detailContent">
+      <div class="empty-state">
+        <p>Loading variety…</p>
+      </div>
+    </div>
+
+    <section style="margin-top: 2.5rem;">
+      <h2>Related / More Varieties</h2>
+      <div class="grid" id="relatedGrid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p><strong>Aliya Rose Nursery</strong> — Shikarpur, Kolkata</p>
+    <p><a href="index.html">Browse full catalog</a> · <a href="order.html">Place an order</a></p>
+  </footer>
+
+  <script src="roses-data.js"></script>
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    function renderDetail(rose) {
+      if (!rose) {
+        document.getElementById("detailContent").innerHTML = `
+          <div class="empty-state">
+            <p style="font-size:1.2rem;">Variety not found</p>
+            <p class="mt-1"><a href="index.html" class="btn btn-primary">Return to Catalog</a></p>
+          </div>`;
+        return;
+      }
+
+      document.title = `${rose.name} (${rose.code}) — Aliya Rose Nursery`;
+
+      const fragrantBadge = rose.fragrant
+        ? `<span class="badge fragrant">✨ Strongly Fragrant</span>`
+        : `<span class="badge">Not marked as strongly fragrant</span>`;
+
+      document.getElementById("detailContent").innerHTML = `
+        <div class="detail-hero">
+          <div class="img-placeholder" style="aspect-ratio: 16/7; border-radius: 12px; margin-bottom: 1.2rem;">
+            <span style="font-size: 2.5rem;">🌹</span>
+            <span class="code-tag" style="font-size:0.9rem;">${rose.code}</span>
+          </div>
+          <h1>${rose.name}</h1>
+          <div class="detail-meta">
+            <span class="badge type">${rose.type}</span>
+            ${fragrantBadge}
+            <span class="badge">${rose.origin}</span>
+          </div>
+          <div class="detail-code">${rose.code}</div>
+          <p class="detail-desc mt-2">${rose.description}</p>
+          <p class="text-sm text-muted mt-1"><strong>Color Profile:</strong> ${rose.color}</p>
+          
+          <div class="detail-actions">
+            <a href="order.html?code=${encodeURIComponent(rose.code)}&name=${encodeURIComponent(rose.name)}" class="btn btn-accent">
+              Order This Variety
+            </a>
+            <a href="index.html#catalog" class="btn btn-secondary">Back to Catalog</a>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <h3>How to order</h3>
+          <p class="text-sm">When placing a wholesale or retail order, please quote the unique plant variety code <strong>${rose.code}</strong>. 
+          This ensures accurate identification of the cultivar from our 500-variety commercial directory.</p>
+        </div>
+      `;
+
+      // Related (same type or same origin)
+      const related = roseVarieties
+        .filter(r => r.code !== rose.code && (r.type === rose.type || r.origin === rose.origin))
+        .slice(0, 4);
+
+      const relatedGrid = document.getElementById("relatedGrid");
+      relatedGrid.innerHTML = "";
+      related.forEach(r => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <div class="img-placeholder">
+            <span>🌹</span>
+            <span class="code-tag">${r.code}</span>
+          </div>
+          <div class="card-body">
+            <span class="badge type">${r.type}</span>
+            <h3>${r.name}</h3>
+            <div class="card-actions">
+              <a href="variety.html?code=${encodeURIComponent(r.code)}" class="btn btn-primary btn-sm">View</a>
+            </div>
+          </div>
+        `;
+        relatedGrid.appendChild(card);
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const code = getQueryParam("code");
+      const name = getQueryParam("name");
+      let rose = null;
+      if (code) rose = getRoseByCode(code);
+      if (!rose && name) rose = getRoseByName(name);
+      renderDetail(rose);
+    });
+  </script>
+</body>
+</html>
