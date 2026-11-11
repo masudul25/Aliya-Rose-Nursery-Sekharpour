@@ -1,145 +1,210 @@
-// Sample dataset for 200+ rose varieties
-const roseVarieties = [
-  { name: "Double Delight", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Black Lady", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Lal Kolkata", type: "Desi Rose", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Iceberg", type: "Floribunda", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Angel Face", type: "Floribunda", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Miniature Red", type: "Miniature", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Eden Climber", type: "Climber", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Knock Out", type: "Shrub", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Flower Carpet Pink", type: "Ground Cover", fragrant: false, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Queen Elizabeth", type: "Grandiflora", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Abraham Darby", type: "Fragrant Roses", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" },
-  { name: "Blue Moon", type: "Hybrid Tea", fragrant: true, channelUrl: "https://youtube.com/@yourchannel" }
-];
+// Aliya Rose Nursery – Catalog Logic
 
-let filteredData = [...roseVarieties];
-let visibleCount = 10;
-let currentFilterType = "type";
-let currentFilterVal = "All";
+let filteredData = [];
+let visibleCount = 12;
+let currentFilters = {
+  type: "All",
+  fragrant: "All",
+  alpha: "All",
+  search: ""
+};
 
-// Toggle navigation menu
 function toggleMenu() {
-  const links = document.getElementById("navLinks");
-  links.classList.toggle("show");
+  document.getElementById("navLinks").classList.toggle("show");
 }
 
-// Toggle accordions
-function toggleAccordion(id) {
-  const content = document.getElementById(id);
-  content.classList.toggle("show");
-}
-
-// Filter catalog by type or alphabet
-function filterCatalog(filterCategory, value, element) {
-  const parent = element.parentElement;
-  parent.querySelectorAll('.filter-chip').forEach(btn => btn.classList.remove('active'));
-  element.classList.add('active');
-
-  currentFilterType = filterCategory;
-  currentFilterVal = value;
-
-  if (value === 'All') {
-    filteredData = [...roseVarieties];
-  } else if (filterCategory === 'type') {
-    if (value === 'Fragrant Roses') {
-      filteredData = roseVarieties.filter(item => item.fragrant);
-    } else {
-      filteredData = roseVarieties.filter(item => item.type === value);
-    }
-  } else if (filterCategory === 'alpha') {
-    filteredData = roseVarieties.filter(item => item.name.toUpperCase().startsWith(value));
+// Close menu when clicking outside
+document.addEventListener("click", (e) => {
+  const nav = document.querySelector(".sticky-nav");
+  if (nav && !nav.contains(e.target)) {
+    document.getElementById("navLinks")?.classList.remove("show");
   }
+});
 
-  visibleCount = 10;
+function applyFilters() {
+  const searchVal = (document.getElementById("searchInput")?.value || "").trim().toLowerCase();
+  currentFilters.search = searchVal;
+
+  filteredData = roseVarieties.filter(rose => {
+    // Type
+    if (currentFilters.type !== "All" && rose.type !== currentFilters.type) return false;
+
+    // Fragrant
+    if (currentFilters.fragrant === "true" && !rose.fragrant) return false;
+    if (currentFilters.fragrant === "false" && rose.fragrant) return false;
+
+    // Alphabet
+    if (currentFilters.alpha !== "All") {
+      if (!rose.name.toUpperCase().startsWith(currentFilters.alpha)) return false;
+    }
+
+    // Search
+    if (searchVal) {
+      const haystack = [
+        rose.name,
+        rose.code,
+        rose.origin,
+        rose.color,
+        rose.type,
+        rose.description
+      ].join(" ").toLowerCase();
+      if (!haystack.includes(searchVal)) return false;
+    }
+
+    return true;
+  });
+
+  visibleCount = 12;
   renderCatalog();
+  updateCount();
 }
 
-// Render Rose Catalog Cards with WhatsApp Order & Channel Links
+function setFilter(category, value, element) {
+  // Update active chip in the same group
+  const parent = element.closest(".filter-chips");
+  parent.querySelectorAll(".filter-chip").forEach(btn => btn.classList.remove("active"));
+  element.classList.add("active");
+
+  currentFilters[category] = value;
+  applyFilters();
+}
+
 function renderCatalog() {
   const grid = document.getElementById("catalogGrid");
+  if (!grid) return;
+
   grid.innerHTML = "";
+  const items = filteredData.slice(0, visibleCount);
 
-  const itemsToDisplay = filteredData.slice(0, visibleCount);
-
-  if (itemsToDisplay.length === 0) {
-    grid.innerHTML = `<p style="grid-column: 1/-1; text-align: center; color: var(--muted);">No varieties found matching criteria.</p>`;
+  if (items.length === 0) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <p style="font-size:1.2rem; margin-bottom:0.5rem;">No varieties found</p>
+        <p>Try changing filters or search terms.</p>
+      </div>`;
     document.getElementById("viewMoreBtn").style.display = "none";
     return;
   }
 
-  itemsToDisplay.forEach(rose => {
+  items.forEach(rose => {
     const card = document.createElement("div");
     card.className = "card";
 
-    const isFragrantBadge = rose.fragrant 
+    const fragrantBadge = rose.fragrant
       ? `<span class="badge fragrant">✨ Fragrant</span>`
-      : `<span class="badge">${rose.type}</span>`;
-
-    // WhatsApp Direct Order Link with pre-filled message
-    const whatsappMessage = encodeURIComponent(`Hello, I want to order the rose variety: ${rose.name} (${rose.type}). Please share details.`);
-    const whatsappUrl = `https://wa.me/916290488309?text=${whatsappMessage}`;
+      : "";
 
     card.innerHTML = `
-      <div class="img-placeholder">Photos Coming Soon</div>
+      <div class="img-placeholder">
+        <span>🌹</span>
+        <span class="code-tag">${rose.code}</span>
+      </div>
       <div class="card-body">
-        ${isFragrantBadge}
+        <div style="display:flex; gap:0.35rem; flex-wrap:wrap;">
+          <span class="badge type">${rose.type}</span>
+          ${fragrantBadge}
+        </div>
         <h3>${rose.name}</h3>
-        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.5rem;">
-          <a href="${whatsappUrl}" target="_blank" class="btn btn-primary" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.5rem;">
-            🛒 Order on WhatsApp
-          </a>
-          <a href="${rose.channelUrl}" target="_blank" class="btn btn-secondary" style="flex: 1; text-align: center; font-size: 0.85rem; padding: 0.5rem;">
-            📺 Watch Channel
-          </a>
+        <div class="meta">
+          <span>${rose.origin}</span>
+          <span>•</span>
+          <span>${rose.color}</span>
+        </div>
+        <p class="text-sm text-muted" style="flex-grow:1; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;">
+          ${rose.description}
+        </p>
+        <div class="card-actions">
+          <a href="variety.html?code=${encodeURIComponent(rose.code)}" class="btn btn-primary btn-sm">View Details</a>
+          <a href="order.html?code=${encodeURIComponent(rose.code)}&name=${encodeURIComponent(rose.name)}" class="btn btn-secondary btn-sm">Order</a>
         </div>
       </div>
     `;
-
     grid.appendChild(card);
   });
 
-  const viewMoreBtn = document.getElementById("viewMoreBtn");
-  if (visibleCount >= filteredData.length) {
-    viewMoreBtn.style.display = "none";
-  } else {
-    viewMoreBtn.style.display = "inline-block";
+  const btn = document.getElementById("viewMoreBtn");
+  if (btn) {
+    btn.style.display = visibleCount >= filteredData.length ? "none" : "inline-flex";
   }
 }
 
-// Load 10 more items
 function loadMore() {
-  visibleCount += 10;
+  visibleCount += 12;
   renderCatalog();
 }
 
-// Map Fallback Trigger
-function showMapFallback() {
-  document.getElementById("mapFallback").classList.add("show");
+function updateCount() {
+  const el = document.getElementById("totalCount");
+  if (el) el.textContent = filteredData.length;
 }
 
-// Scroll Hiding Observer for Major Sections
-function initScrollObserver() {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.remove('scroll-hidden');
-      } else {
-        if (entry.boundingClientRect.top < 0) {
-          entry.target.classList.add('scroll-hidden');
-        }
-      }
+function openVideoModal(url, title) {
+  document.getElementById("modalTitle").textContent = title;
+  document.getElementById("videoIframe").src = url;
+  document.getElementById("videoModal").classList.add("show");
+}
+
+function closeVideoModal() {
+  document.getElementById("videoModal").classList.remove("show");
+  document.getElementById("videoIframe").src = "";
+}
+
+// Build dynamic filter chips
+function initFilters() {
+  // Types
+  const typeContainer = document.getElementById("typeFilters");
+  if (typeContainer) {
+    const types = getUniqueTypes();
+    types.forEach(t => {
+      const btn = document.createElement("button");
+      btn.className = "filter-chip";
+      btn.dataset.filter = "type";
+      btn.dataset.value = t;
+      btn.textContent = t;
+      btn.onclick = function () { setFilter("type", t, this); };
+      typeContainer.appendChild(btn);
     });
-  }, { threshold: 0.1 });
+  }
 
-  document.querySelectorAll('.scroll-section').forEach(section => {
-    observer.observe(section);
+  // Alphabet A–Z that actually exist
+  const alphaContainer = document.getElementById("alphaFilters");
+  if (alphaContainer) {
+    const letters = [...new Set(roseVarieties.map(r => r.name[0].toUpperCase()))].sort();
+    letters.forEach(letter => {
+      const btn = document.createElement("button");
+      btn.className = "filter-chip";
+      btn.dataset.filter = "alpha";
+      btn.dataset.value = letter;
+      btn.textContent = letter;
+      btn.onclick = function () { setFilter("alpha", letter, this); };
+      alphaContainer.appendChild(btn);
+    });
+  }
+
+  // Attach click handlers for static chips
+  document.querySelectorAll(".filter-chip[data-filter]").forEach(btn => {
+    if (!btn.onclick) {
+      btn.onclick = function () {
+        setFilter(this.dataset.filter, this.dataset.value, this);
+      };
+    }
   });
+
+  // Search on Enter
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") applyFilters();
+    });
+  }
 }
 
-// Initialise page
-window.addEventListener('DOMContentLoaded', () => {
-  renderCatalog();
-  initScrollObserver();
+// Init
+window.addEventListener("DOMContentLoaded", () => {
+  if (typeof roseVarieties !== "undefined") {
+    filteredData = [...roseVarieties];
+    initFilters();
+    renderCatalog();
+    updateCount();
+  }
 });
