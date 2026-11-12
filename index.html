@@ -3,209 +3,246 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aliya Rose Nursery — Shikarpur, Kolkata | 500 Rose Varieties</title>
-  <meta name="description" content="Aliya Rose Nursery, Shikarpur (Kolkata) — High-quality Indian & imported rose cultivars. Browse 100+ listed varieties from our 500-variety commercial catalog.">
+  <title>Aliya Rose Nursery — Commercial Wholesale Catalog</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .rules-btn {
+      background-color: #fdf2f4;
+      color: #be123c;
+      border: 1px solid #be123c;
+      padding: 0.35rem 0.85rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-left: 0.5rem;
+      vertical-align: middle;
+      transition: all 0.2s ease;
+    }
+    .rules-btn:hover {
+      background-color: #be123c;
+      color: #ffffff;
+    }
+    .rules-modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+      z-index: 10000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .rules-modal-overlay.show {
+      display: flex;
+    }
+    .rules-modal-box {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      animation: popIn 0.2s ease-out;
+    }
+    .rules-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    .rules-modal-header h3 {
+      margin: 0;
+      color: #881337;
+      font-size: 1.15rem;
+    }
+    .close-rules-btn {
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      line-height: 1;
+      color: #6b7280;
+      cursor: pointer;
+    }
+    .rules-modal-body p {
+      margin-top: 0;
+      color: #374151;
+      font-size: 0.95rem;
+    }
+    .rules-modal-body ul {
+      padding-left: 1.2rem;
+      color: #1f2937;
+      font-size: 0.92rem;
+      line-height: 1.6;
+      margin-bottom: 1.2rem;
+    }
+    .rules-modal-body li {
+      margin-bottom: 0.45rem;
+    }
+    .watch-now-btn {
+      width: 100%;
+      background-color: #be123c;
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: background 0.2s ease;
+    }
+    .watch-now-btn:hover {
+      background-color: #9f1239;
+    }
+    .video-coming-soon-box {
+      display: none;
+      margin-top: 1rem;
+      background: #fdf2f4;
+      border: 1px dashed #be123c;
+      border-radius: 8px;
+      padding: 1.2rem;
+      text-align: center;
+      color: #881337;
+      animation: popIn 0.2s ease-out;
+    }
+    .video-coming-soon-box.show {
+      display: block;
+    }
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <h1>Aliya Rose Nursery</h1>
     <p>Shikarpur, Kolkata, West Bengal</p>
-    <div class="header-badge">500 Verified Varieties • Wholesale & Retail</div>
   </header>
 
   <nav class="sticky-nav">
-    <a href="index.html" class="nav-brand">Aliya Rose Nursery</a>
-    <button class="menu-btn" onclick="toggleMenu()">Menu ☰</button>
+    <a href="index.html" class="nav-brand">🌹 Catalog</a>
+    <button class="menu-toggle" onclick="toggleMenu()">☰</button>
     <div class="nav-links" id="navLinks">
-      <a href="#catalog" onclick="toggleMenu()">Catalog</a>
-      <a href="#pots" onclick="toggleMenu()">Net Pots</a>
-      <a href="#fertilizers" onclick="toggleMenu()">Fertilizers</a>
-      <a href="#services" onclick="toggleMenu()">Services</a>
-      <a href="#care" onclick="toggleMenu()">Rose Care</a>
-      <a href="order.html" onclick="toggleMenu()">Place Order</a>
-      <a href="#map-section" onclick="toggleMenu()">Location</a>
+      <a href="index.html">Home</a>
+      <a href="order.html">Order Cart</a>
     </div>
   </nav>
 
   <main>
-    <!-- Catalog -->
-    <section id="catalog">
-      <h2>Rose Variety Catalog <span class="count" id="totalCount">0</span></h2>
-      <p class="text-muted text-sm" style="margin-bottom: 1rem;">
-        Browse our commercial directory. Each variety has a unique plant code (e.g. <strong>D1 BI HT F</strong>).
-        Click any rose for full details &amp; ordering.
+    <section class="catalog-intro" style="text-align: center; padding: 1.5rem 1rem;">
+      <h2>Browse Our Commercial Directory</h2>
+      <p>
+        Each variety has a unique plant code for wholesale ordering.
+        <button type="button" onclick="openRulesModal()" class="rules-btn">
+          ℹ️ How Plant Codes Work
+        </button>
       </p>
-
-      <div class="controls">
-        <div class="search-row">
-          <input type="search" id="searchInput" placeholder="Search by name, code, color, origin…" autocomplete="off">
-          <button class="btn btn-primary" onclick="applyFilters()">Search</button>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Type</span>
-          <div class="filter-chips" id="typeFilters">
-            <button class="filter-chip active" data-filter="type" data-value="All">All</button>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Fragrance</span>
-          <div class="filter-chips">
-            <button class="filter-chip active" data-filter="fragrant" data-value="All">All</button>
-            <button class="filter-chip fragrant" data-filter="fragrant" data-value="true">✨ Fragrant Only</button>
-            <button class="filter-chip" data-filter="fragrant" data-value="false">Non-fragrant</button>
-          </div>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-label">Alphabet</span>
-          <div class="filter-chips" id="alphaFilters">
-            <button class="filter-chip active" data-filter="alpha" data-value="All">All</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="grid" id="catalogGrid"></div>
-
-      <div class="center-btn">
-        <button class="btn btn-primary" id="viewMoreBtn" onclick="loadMore()">View More Varieties</button>
-      </div>
     </section>
 
-    <!-- Net Pots -->
-    <section id="pots">
-      <h2>Net Pots & Accessories</h2>
-      <div class="grid">
-        <div class="card">
-          <div class="img-placeholder">🪴 Net Pots</div>
-          <div class="card-body">
-            <h3>Standard Horticultural Net Pots</h3>
-            <p class="text-sm text-muted">Durable net pots designed for optimal root aeration, drainage, and healthy rose propagation.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="img-placeholder">🪴 Propagation</div>
-          <div class="card-body">
-            <h3>Grafting & Rootstock Supplies</h3>
-            <p class="text-sm text-muted">Quality rootstock and grafting accessories for commercial rose production.</p>
-          </div>
+    <!-- Search & Filters -->
+    <section class="filters-section">
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Search by name, code (e.g. D1 BI HT F), color, or origin..." oninput="applyFilters()">
+      </div>
+
+      <div class="filter-group">
+        <label>Type:</label>
+        <div class="filter-chips" id="typeFilters">
+          <button class="filter-chip active" data-filter="type" data-value="All">All</button>
         </div>
       </div>
-    </section>
 
-    <!-- Fertilizers -->
-    <section id="fertilizers">
-      <h2>Organic Fertilizers</h2>
-      <div class="grid">
-        <div class="card">
-          <div class="img-placeholder">🌱 Cow Dung</div>
-          <div class="card-body">
-            <h3>Composted Cow Dung Fertilizer</h3>
-            <p class="text-sm text-muted">Rich, fully aged organic matter ideal for improving soil structure and root growth.</p>
-          </div>
-        </div>
-        <div class="card">
-          <div class="img-placeholder">🪱 Vermicompost</div>
-          <div class="card-body">
-            <h3>Pure Earthworm Vermicompost</h3>
-            <p class="text-sm text-muted">Premium nutrient-rich organic vermicompost packed with essential microbes for lush blooms.</p>
-          </div>
+      <div class="filter-group">
+        <label>Fragrance:</label>
+        <div class="filter-chips">
+          <button class="filter-chip active" data-filter="fragrant" data-value="All">All</button>
+          <button class="filter-chip" data-filter="fragrant" data-value="true">✨ Fragrant</button>
+          <button class="filter-chip" data-filter="fragrant" data-value="false">Non-Fragrant</button>
         </div>
       </div>
-    </section>
 
-    <!-- Services -->
-    <section id="services">
-      <h2>Services & Garden Tools</h2>
-      <div class="services-tools-grid">
-        <div class="info-box">
-          <h3>Garden & Landscaping Services</h3>
-          <ul class="info-list">
-            <li>Commercial Rose Garden Design & Planning</li>
-            <li>Bulk Nursery Stock Supply for Landscaping</li>
-            <li>On-site Soil Testing & Garden Maintenance</li>
-            <li>Wholesale rootstock & variety supply across India</li>
-          </ul>
-        </div>
-        <div class="info-box">
-          <h3>Garden Tools & Supplies</h3>
-          <ul class="info-list">
-            <li>Heavy-duty Rose Pruning Shears & Secateurs</li>
-            <li>High-pressure Power Spray Wands</li>
-            <li>Potting Mixes & Grafting Accessories</li>
-            <li>Organic fungicides & foliar feeds</li>
-          </ul>
+      <div class="filter-group">
+        <label>A–Z:</label>
+        <div class="filter-chips" id="alphaFilters">
+          <button class="filter-chip active" data-filter="alpha" data-value="All">All</button>
         </div>
       </div>
-    </section>
 
-    <!-- Care -->
-    <section id="care">
-      <h2>Professional Rose Care & Cultivation</h2>
-      <div class="care-card">
-        <h3>Expert Growing Guide</h3>
-        <p>Growing commercial-quality rose blooms requires proper sunlight, moisture management, and precise pruning:</p>
-        <ul class="info-list" style="margin-top: 0.8rem;">
-          <li><strong>Sunlight:</strong> Ensure plants receive 6–8 hours of direct sunlight daily.</li>
-          <li><strong>Watering:</strong> Water deeply at the base early in the morning, avoiding wet foliage.</li>
-          <li><strong>Pruning:</strong> Prune deadwood regularly at a 45-degree angle just above an outward-facing eye bud.</li>
-          <li><strong>Nutrients:</strong> Feed regularly with organic vermicompost and well-composted cow manure.</li>
-        </ul>
-        <div class="care-video-buttons">
-          <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Professional Rose Planting Guide')">
-            🎬 Planting Guide
-          </button>
-          <button class="btn btn-secondary" onclick="openVideoModal('https://www.youtube.com/embed/dQw4w9WgXcQ', 'Rose Pruning Masterclass')">
-            🎬 Pruning Masterclass
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Location -->
-    <section id="map-section">
-      <h2>Nursery Location</h2>
-      <p style="margin-bottom: 1rem;">
-        <strong>Aliya Rose Nursery</strong> — Jhaligachhi, Greentech City, New Town, Shikarpur, Kolkata, West Bengal 700135
+      <p class="text-sm text-muted" style="margin-top: 0.75rem;">
+        Showing <strong id="totalCount">0</strong> varieties
       </p>
-      <div class="map-wrapper">
-        <iframe
-          src="https://maps.google.com/maps?q=Shikarpur%20Jhaligachhi%20Greentech%20City%20Kolkata&t=&z=14&ie=UTF8&iwloc=&output=embed"
-          loading="lazy"
-          allowfullscreen>
-        </iframe>
-        <div class="map-fallback" id="mapFallback">
-          📍 <h3>Shikarpur Area, Kolkata</h3>
-          <p>Aliya Rose Nursery, Jhaligachhi, Greentech City, New Town, West Bengal 700135</p>
-          <a href="https://maps.app.goo.gl/sfhVkocWiRw44fsC8" target="_blank" rel="noopener" class="btn btn-primary mt-2">
-            Open in Google Maps
-          </a>
-        </div>
-      </div>
     </section>
+
+    <!-- Catalog Grid -->
+    <section class="catalog-grid" id="catalogGrid"></section>
+
+    <div style="text-align: center; margin: 2rem 0;">
+      <button id="viewMoreBtn" class="btn btn-primary" onclick="loadMore()">Load More Varieties</button>
+    </div>
   </main>
 
-  <!-- Video Modal -->
-  <div class="modal" id="videoModal">
-    <div class="modal-content">
-      <button class="close-btn" onclick="closeVideoModal()">&times;</button>
-      <h3 id="modalTitle">Plant Video</h3>
-      <div class="video-container">
-        <iframe id="videoIframe" src="" allowfullscreen allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+  <!-- Plant Code Rules Pop-up Modal -->
+  <div id="rulesModal" class="rules-modal-overlay" onclick="if(event.target === this) closeRulesModal()">
+    <div class="rules-modal-box">
+      <div class="rules-modal-header">
+        <h3>🌹 How Our Plant Codes Work</h3>
+        <button type="button" onclick="closeRulesModal()" class="close-rules-btn">&times;</button>
+      </div>
+      <div class="rules-modal-body">
+        <p>Every rose variety in our nursery is assigned a unique code for easy wholesale ordering and identification. For example: <strong>D1 BI HT F</strong></p>
+        <ul>
+          <li><strong>First Part (e.g., D1):</strong> Variety Initial & Serial Number</li>
+          <li><strong>Color Code (e.g., BI, R, Y, P):</strong> BI = Bicolor, R = Red, Y = Yellow, P = Pink, W = White, O = Orange</li>
+          <li><strong>Rose Type (e.g., HT, FL, CL, MIN):</strong> HT = Hybrid Tea, FL = Floribunda, CL = Climber, MIN = Miniature</li>
+          <li><strong>Fragrance (F):</strong> Indicates a fragrant variety (omitted if non-fragrant)</li>
+        </ul>
+
+        <!-- Watch Now Button -->
+        <button type="button" onclick="showVideoComingSoon()" class="watch-now-btn" id="watchNowBtn">
+          🎬 Watch Now (Video Guide)
+        </button>
+
+        <!-- Video Coming Soon Box -->
+        <div id="videoComingSoonBox" class="video-coming-soon-box">
+          <div style="font-size: 1.8rem; margin-bottom: 0.3rem;">🎥</div>
+          <strong style="font-size: 1.05rem; display: block; margin-bottom: 0.25rem;">Video Coming Soon!</strong>
+          <span style="font-size: 0.88rem; color: #4b5563;">We are preparing a step-by-step video guide explaining our nursery plant codes.</span>
+        </div>
       </div>
     </div>
   </div>
 
   <footer>
     <p><strong>Aliya Rose Nursery</strong> — Shikarpur, Kolkata, West Bengal</p>
-    <p>Catalog Capacity: 500 Verified Varieties • Quote the unique plant code when ordering</p>
-    <p class="mt-1"><a href="order.html">Place a Wholesale / Retail Order</a></p>
   </footer>
 
-  <script src="roses-data.js"></script>
-  <script src="script.js"></script>
+  <!-- Data & Logic -->
+  <script src="roses-data.js?v=4"></script>
+  <script src="script.js?v=4"></script>
+  <script>
+    function openRulesModal() {
+      document.getElementById("rulesModal").classList.add("show");
+    }
+    function closeRulesModal() {
+      document.getElementById("rulesModal").classList.remove("show");
+      // Reset video notice when modal closes
+      document.getElementById("videoComingSoonBox").classList.remove("show");
+      document.getElementById("watchNowBtn").style.display = "flex";
+    }
+    function showVideoComingSoon() {
+      document.getElementById("watchNowBtn").style.display = "none";
+      document.getElementById("videoComingSoonBox").classList.add("show");
+    }
+  </script>
+
 </body>
 </html>
