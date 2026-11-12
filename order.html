@@ -5,157 +5,161 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Place Order — Aliya Rose Nursery</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    .order-container {
+      max-width: 520px;
+      margin: 2rem auto;
+      background: #ffffff;
+      padding: 1.8rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+    }
+    .selected-plant-box {
+      background: #fdf2f4;
+      border-left: 4px solid #be123c;
+      padding: 0.9rem 1rem;
+      border-radius: 6px;
+      margin-bottom: 1.2rem;
+    }
+    .form-group {
+      margin-bottom: 1.1rem;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: #1f2937;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      border: 1px solid #d1d5db;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: #be123c;
+    }
+    .whatsapp-btn {
+      width: 100%;
+      background-color: #25D366;
+      color: #ffffff;
+      border: none;
+      padding: 0.9rem;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .whatsapp-btn:hover {
+      background-color: #1ebe5d;
+    }
+  </style>
 </head>
 <body>
 
   <header>
     <h1>Aliya Rose Nursery</h1>
     <p>Shikarpur, Kolkata, West Bengal</p>
-    <div class="header-badge">Wholesale & Retail Orders</div>
   </header>
 
   <nav class="sticky-nav">
-    <a href="index.html" class="nav-brand">← Catalog</a>
-    <button class="menu-btn" onclick="toggleMenu()">Menu ☰</button>
-    <div class="nav-links" id="navLinks">
-      <a href="index.html#catalog">Browse Varieties</a>
-      <a href="index.html#map-section">Location</a>
-    </div>
+    <a href="index.html" class="nav-brand">← Back to Catalog</a>
   </nav>
 
   <main>
-    <h2>Place an Order</h2>
-    <p class="text-muted" style="margin-bottom: 1.5rem;">
-      For wholesale orders, rootstock inquiries, and delivery schedules across India, please quote the unique plant variety code 
-      (e.g. <strong>D1 BI HT F</strong>). Our catalog capacity is <strong>500 verified varieties</strong>.
-    </p>
+    <div class="order-container">
+      <h2 style="margin-top: 0;">Place Your Order</h2>
+      <p class="text-muted text-sm" style="margin-bottom: 1.2rem;">
+        Fill in the details below to send your order directly to our nursery WhatsApp.
+      </p>
 
-    <div class="order-form">
-      <form id="orderForm" onsubmit="handleSubmit(event)">
-        <div class="form-group">
-          <label for="varietyCode">Variety Code *</label>
-          <input type="text" id="varietyCode" name="code" placeholder="e.g. A1 BI HT F" required>
+      <!-- Auto-filled if clicked from a rose card -->
+      <div class="selected-plant-box" id="plantPreview" style="display: none;">
+        <div style="font-size: 0.85rem; color: #6b7280;">Selected Variety:</div>
+        <strong id="displayPlant" style="font-size: 1.1rem; color: #881337;"></strong>
+      </div>
+
+      <form id="whatsappOrderForm" onsubmit="sendToWhatsApp(event)">
+        <div class="form-group" id="manualVarietyGroup">
+          <label for="varietyInput">Rose Variety / Code *</label>
+          <input type="text" id="varietyInput" placeholder="e.g., Double Delight (D1 BI HT F)" required>
         </div>
 
         <div class="form-group">
-          <label for="varietyName">Cultivar Name</label>
-          <input type="text" id="varietyName" name="name" placeholder="e.g. Abhisarika">
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="quantity">Quantity (plants) *</label>
-            <input type="number" id="quantity" name="quantity" min="1" value="10" required>
-          </div>
-          <div class="form-group">
-            <label for="orderType">Order Type</label>
-            <select id="orderType" name="orderType">
-              <option value="retail">Retail / Garden</option>
-              <option value="wholesale">Wholesale / Commercial</option>
-              <option value="rootstock">Rootstock Inquiry</option>
-            </select>
-          </div>
+          <label for="quantity">Quantity (Number of Plants) *</label>
+          <input type="number" id="quantity" min="1" value="1" placeholder="Enter quantity" required>
         </div>
 
         <div class="form-group">
-          <label for="customerName">Your Name *</label>
-          <input type="text" id="customerName" name="customerName" required>
-        </div>
-
-        <div class="form-row">
-          <div class="form-group">
-            <label for="phone">Phone / WhatsApp *</label>
-            <input type="tel" id="phone" name="phone" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email">
-          </div>
+          <label for="customerName">Your Full Name *</label>
+          <input type="text" id="customerName" placeholder="Enter your name" required>
         </div>
 
         <div class="form-group">
-          <label for="city">City / Delivery Location *</label>
-          <input type="text" id="city" name="city" placeholder="City, State" required>
+          <label for="customerAddress">Delivery Address (with Pin Code) *</label>
+          <textarea id="customerAddress" rows="3" placeholder="House/Village, Post Office, District, Pin Code" required></textarea>
         </div>
 
-        <div class="form-group">
-          <label for="notes">Additional Notes / Requirements</label>
-          <textarea id="notes" name="notes" placeholder="Delivery timeline, pot size, specific requests…"></textarea>
-        </div>
-
-        <button type="submit" class="btn btn-primary" style="width:100%; padding:0.85rem; font-size:1.05rem;">
-          Submit Order Enquiry
+        <button type="submit" class="whatsapp-btn">
+          📲 Send Order on WhatsApp
         </button>
       </form>
-
-      <div id="successMsg" class="hidden" style="margin-top:1.5rem; padding:1.2rem; background:#ccfbf1; border-radius:12px; border:1px solid #99f6e4;">
-        <h3 style="color:#0f766e; margin-bottom:0.4rem;">Enquiry Received</h3>
-        <p class="text-sm">Thank you! Your order enquiry has been prepared. Please contact the nursery directly via phone/WhatsApp with the details shown below (or copy them). This is a front-end demo form — no data is sent to a server.</p>
-        <pre id="orderSummary" style="margin-top:0.8rem; background:#fff; padding:0.9rem; border-radius:8px; font-size:0.85rem; overflow-x:auto;"></pre>
-        <a href="index.html" class="btn btn-secondary mt-2">Back to Catalog</a>
-      </div>
-    </div>
-
-    <div class="info-box mt-2" style="margin-top:2rem;">
-      <h3>Ordering Tips</h3>
-      <ul class="info-list">
-        <li>Always quote the exact <strong>Variety Code</strong> from the catalog for accurate supply.</li>
-        <li>Wholesale rates available for bulk quantities — mention “Wholesale” in order type.</li>
-        <li>Delivery schedules depend on season and rootstock availability.</li>
-        <li>Location: Jhaligachhi, Greentech City, New Town, Shikarpur, Kolkata 700135</li>
-      </ul>
     </div>
   </main>
 
   <footer>
     <p><strong>Aliya Rose Nursery</strong> — Shikarpur, Kolkata, West Bengal</p>
-    <p>Catalog Capacity: 500 Verified Varieties</p>
   </footer>
 
-  <script src="roses-data.js"></script>
   <script>
-    function toggleMenu() {
-      document.getElementById("navLinks").classList.toggle("show");
-    }
+    const NURSERY_WHATSAPP_NUMBER = "916290488309";
 
-    function getQueryParam(name) {
-      return new URLSearchParams(window.location.search).get(name);
-    }
-
+    // Read rose code & name from URL parameters (when user clicks "Order" on a card)
     window.addEventListener("DOMContentLoaded", () => {
-      const code = getQueryParam("code");
-      const name = getQueryParam("name");
-      if (code) document.getElementById("varietyCode").value = code;
-      if (name) document.getElementById("varietyName").value = name;
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      const name = params.get("name");
 
-      // Auto-fill name if only code is given
-      if (code && !name) {
-        const rose = getRoseByCode(code);
-        if (rose) document.getElementById("varietyName").value = rose.name;
+      if (code || name) {
+        const label = `${name || ""} ${code ? `(${code})` : ""}`.trim();
+        document.getElementById("displayPlant").textContent = label;
+        document.getElementById("plantPreview").style.display = "block";
+        document.getElementById("varietyInput").value = label;
+        document.getElementById("manualVarietyGroup").style.display = "none";
       }
     });
 
-    function handleSubmit(e) {
-      e.preventDefault();
-      const form = e.target;
-      const data = Object.fromEntries(new FormData(form).entries());
+    // Format message and open WhatsApp
+    function sendToWhatsApp(event) {
+      event.preventDefault();
 
-      const summary = `
-VARIETY CODE : ${data.code}
-CULTIVAR     : ${data.name || "—"}
-QUANTITY     : ${data.quantity} plants
-ORDER TYPE   : ${data.orderType}
-NAME         : ${data.customerName}
-PHONE        : ${data.phone}
-EMAIL        : ${data.email || "—"}
-LOCATION     : ${data.city}
-NOTES        : ${data.notes || "—"}
-      `.trim();
+      const variety = document.getElementById("varietyInput").value.trim();
+      const qty = document.getElementById("quantity").value.trim();
+      const name = document.getElementById("customerName").value.trim();
+      const address = document.getElementById("customerAddress").value.trim();
 
-      document.getElementById("orderSummary").textContent = summary;
-      form.classList.add("hidden");
-      document.getElementById("successMsg").classList.remove("hidden");
+      const message =
+        `*New Rose Order — Aliya Rose Nursery*\n\n` +
+        `🌹 *Variety:* ${variety}\n` +
+        `📦 *Quantity:* ${qty} plants\n` +
+        `👤 *Name:* ${name}\n` +
+        `📍 *Address:* ${address}`;
+
+      const whatsappURL = `https://wa.me/${NURSERY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+      window.open(whatsappURL, "_blank");
     }
   </script>
+
 </body>
 </html>
