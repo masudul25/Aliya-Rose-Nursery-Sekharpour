@@ -149,6 +149,11 @@ function closeVideoModal() {
   document.getElementById("videoIframe").src = "";
 }
 
+// Helper to get unique types from data
+function getUniqueTypes() {
+  return [...new Set(roseVarieties.map(r => r.type))].sort();
+}
+
 // Build dynamic filter chips
 function initFilters() {
   // Types
