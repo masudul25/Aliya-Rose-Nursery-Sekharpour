@@ -3,23 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Place Order — Aliya Rose Nursery</title>
+  <title>Complete Order — Aliya Rose Nursery</title>
   <link rel="stylesheet" href="style.css">
   <style>
     .order-container {
-      max-width: 520px;
+      max-width: 600px;
       margin: 2rem auto;
       background: #ffffff;
       padding: 1.8rem;
       border-radius: 12px;
       box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
     }
-    .selected-plant-box {
+    .cart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+    .cart-table th, .cart-table td {
+      padding: 0.75rem;
+      text-align: left;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 0.95rem;
+    }
+    .cart-table th {
       background: #fdf2f4;
-      border-left: 4px solid #be123c;
-      padding: 0.9rem 1rem;
-      border-radius: 6px;
-      margin-bottom: 1.2rem;
+      color: #881337;
+    }
+    .qty-input {
+      width: 60px;
+      padding: 0.3rem;
+      text-align: center;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: #dc2626;
+      cursor: pointer;
+      font-size: 1rem;
     }
     .form-group {
       margin-bottom: 1.1rem;
@@ -59,7 +81,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      margin-top: 0.5rem;
+      margin-top: 1rem;
     }
     .whatsapp-btn:hover {
       background-color: #1ebe5d;
@@ -79,28 +101,28 @@
 
   <main>
     <div class="order-container">
-      <h2 style="margin-top: 0;">Place Your Order</h2>
+      <h2 style="margin-top: 0;">Review Your Multi-Variety Order</h2>
       <p class="text-muted text-sm" style="margin-bottom: 1.2rem;">
-        Fill in the details below to send your order directly to our nursery WhatsApp.
+        Check your selected rose varieties and quantities below, then provide your delivery details.
       </p>
 
-      <!-- Auto-filled if clicked from a rose card -->
-      <div class="selected-plant-box" id="plantPreview" style="display: none;">
-        <div style="font-size: 0.85rem; color: #6b7280;">Selected Variety:</div>
-        <strong id="displayPlant" style="font-size: 1.1rem; color: #881337;"></strong>
+      <!-- Cart Item List -->
+      <div id="cartSection">
+        <table class="cart-table">
+          <thead>
+            <tr>
+              <th>Variety & Code</th>
+              <th style="width: 80px;">Qty</th>
+              <th style="width: 50px;">Action</th>
+            </tr>
+          </thead>
+          <tbody id="cartTableBody">
+            <!-- Populated via JavaScript -->
+          </tbody>
+        </table>
       </div>
 
       <form id="whatsappOrderForm" onsubmit="sendToWhatsApp(event)">
-        <div class="form-group" id="manualVarietyGroup">
-          <label for="varietyInput">Rose Variety / Code *</label>
-          <input type="text" id="varietyInput" placeholder="e.g., Double Delight (D1 BI HT F)" required>
-        </div>
-
-        <div class="form-group">
-          <label for="quantity">Quantity (Number of Plants) *</label>
-          <input type="number" id="quantity" min="1" value="1" placeholder="Enter quantity" required>
-        </div>
-
         <div class="form-group">
           <label for="customerName">Your Full Name *</label>
           <input type="text" id="customerName" placeholder="Enter your name" required>
@@ -111,8 +133,8 @@
           <textarea id="customerAddress" rows="3" placeholder="House/Village, Post Office, District, Pin Code" required></textarea>
         </div>
 
-        <button type="submit" class="whatsapp-btn">
-          📲 Send Order on WhatsApp
+        <button type="submit" class="whatsapp-btn" id="submitBtn">
+          📲 Send Complete Order on WhatsApp
         </button>
       </form>
     </div>
@@ -124,37 +146,81 @@
 
   <script>
     const NURSERY_WHATSAPP_NUMBER = "916290488309";
+    let cart = JSON.parse(localStorage.getItem("aliyaCart")) || [];
 
-    // Read rose code & name from URL parameters (when user clicks "Order" on a card)
     window.addEventListener("DOMContentLoaded", () => {
+      // If user came from a direct "Order" button from an older link or single item view
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
       const name = params.get("name");
-
-      if (code || name) {
-        const label = `${name || ""} ${code ? `(${code})` : ""}`.trim();
-        document.getElementById("displayPlant").textContent = label;
-        document.getElementById("plantPreview").style.display = "block";
-        document.getElementById("varietyInput").value = label;
-        document.getElementById("manualVarietyGroup").style.display = "none";
+      if (code && name) {
+        if (!cart.some(item => item.code === code)) {
+          cart.push({ code: code, name: name, qty: 1 });
+          localStorage.setItem("aliyaCart", JSON.stringify(cart));
+        }
       }
+      renderCheckoutCart();
     });
 
-    // Format message and open WhatsApp
+    function renderCheckoutCart() {
+      const tbody = document.getElementById("cartTableBody");
+      const submitBtn = document.getElementById("submitBtn");
+      tbody.innerHTML = "";
+
+      if (cart.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#6b7280; padding:1.5rem;">Your cart is empty. <a href="index.html">Browse catalog</a></td></tr>`;
+        if (submitBtn) submitBtn.style.display = "none";
+        return;
+      }
+
+      if (submitBtn) submitBtn.style.display = "flex";
+
+      cart.forEach(item => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><strong>${item.name}</strong><br><small style="color:#6b7280;">${item.code}</small></td>
+          <td><input type="number" class="qty-input" min="1" value="${item.qty}" onchange="updateQty('${item.code}', this.value)"></td>
+          <td><button type="button" class="remove-btn" onclick="removeItem('${item.code}')" title="Remove">🗑️</button></td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function updateQty(code, qty) {
+      let item = cart.find(i => i.code === code);
+      if (item) {
+        item.qty = parseInt(qty) || 1;
+        if (item.qty <= 0) item.qty = 1;
+        localStorage.setItem("aliyaCart", JSON.stringify(cart));
+      }
+    }
+
+    function removeItem(code) {
+      cart = cart.filter(i => i.code !== code);
+      localStorage.setItem("aliyaCart", JSON.stringify(cart));
+      renderCheckoutCart();
+    }
+
     function sendToWhatsApp(event) {
       event.preventDefault();
 
-      const variety = document.getElementById("varietyInput").value.trim();
-      const qty = document.getElementById("quantity").value.trim();
+      if (cart.length === 0) {
+        alert("Your cart is empty!");
+        return;
+      }
+
       const name = document.getElementById("customerName").value.trim();
       const address = document.getElementById("customerAddress").value.trim();
 
-      const message =
-        `*New Rose Order — Aliya Rose Nursery*\n\n` +
-        `🌹 *Variety:* ${variety}\n` +
-        `📦 *Quantity:* ${qty} plants\n` +
-        `👤 *Name:* ${name}\n` +
-        `📍 *Address:* ${address}`;
+      let message = `*Multi-Variety Rose Order — Aliya Rose Nursery*\n\n`;
+      message += `📋 *Selected Varieties:*\n`;
+      
+      cart.forEach((item, index) => {
+        message += `${index + 1}. *${item.name}* (${item.code}) — *Qty:* ${item.qty}\n`;
+      });
+
+      message += `\n👤 *Customer Name:* ${name}\n`;
+      message += `📍 *Delivery Address:* ${address}`;
 
       const whatsappURL = `https://wa.me/${NURSERY_WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
       window.open(whatsappURL, "_blank");
